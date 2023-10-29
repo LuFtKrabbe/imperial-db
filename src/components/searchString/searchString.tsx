@@ -4,9 +4,12 @@ import { Component } from "react";
 import styles from "./searchString.module.css";
 import { DataSearch } from "../../types/types";
 
-class SearchString extends Component<Record<string, never>, DataSearch> {
+class SearchString extends Component<
+  Record<string, (queryString: string) => void>,
+  DataSearch
+> {
   private inputRef: React.RefObject<HTMLInputElement>;
-  constructor(props: Record<string, never>) {
+  constructor(props: Record<string, (queryString: string) => void>) {
     super(props);
     this.state = {
       searchInput: localStorage.getItem("lastQuery")
@@ -18,7 +21,9 @@ class SearchString extends Component<Record<string, never>, DataSearch> {
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (this.state.searchInput) {
+      const { setQueryString } = this.props;
       localStorage.setItem("lastQuery", this.state.searchInput);
+      setQueryString(this.state.searchInput);
     }
     console.log(this.state.searchInput);
     event.preventDefault();
