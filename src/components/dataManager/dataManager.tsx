@@ -5,6 +5,7 @@ import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
 import { DataPlanet } from "../../types/types";
 import mockData from "../mockData";
+import ErrorButton from "../errorButton/errorButton";
 
 class DataManager extends Component<
   Record<string, never>,
@@ -45,6 +46,7 @@ class DataManager extends Component<
     return (
       <>
         <SearchString></SearchString>
+        <ErrorButton></ErrorButton>
         <ResultsDisplay planetData={this.state.planetData}></ResultsDisplay>
       </>
     );
