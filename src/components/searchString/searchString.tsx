@@ -4,12 +4,10 @@ import { Component } from "react";
 import styles from "./searchString.module.css";
 import { DataSearch } from "../../types/types";
 
-class SearchString extends Component<
-  Record<string, (queryString: string) => void>,
-  DataSearch
-> {
+class SearchString extends Component<Record<string, never>, DataSearch> {
   private inputRef: React.RefObject<HTMLInputElement>;
-  constructor(props: Record<string, (queryString: string) => void>) {
+
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       searchInput: localStorage.getItem("lastQuery")
@@ -19,22 +17,16 @@ class SearchString extends Component<
     this.inputRef = React.createRef<HTMLInputElement>();
   }
 
-  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (this.state.searchInput) {
-      const { setQueryString } = this.props;
-      localStorage.setItem("lastQuery", this.state.searchInput);
-      setQueryString(this.state.searchInput);
-    }
-    console.log(this.state.searchInput);
-    event.preventDefault();
-  };
-
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       searchInput: event.target.value,
     });
-    console.log(this.state.searchInput);
-    event.preventDefault();
+  };
+
+  handleSubmit = () => {
+    if (this.state.searchInput) {
+      localStorage.setItem("lastQuery", this.state.searchInput);
+    }
   };
 
   componentDidMount(): void {
@@ -52,6 +44,7 @@ class SearchString extends Component<
               className={styles.searchInput}
               onChange={this.handleChange}
               ref={this.inputRef}
+              type="text"
             ></input>
             <button className={styles.searchButton} type="submit">
               Search

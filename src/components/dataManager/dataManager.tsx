@@ -18,26 +18,21 @@ class DataManager extends Component<
     };
   }
 
-  setQueryString = (queryString: string) => {
-    this.setState({
-      currentQuery: queryString,
-    });
-  };
-
   loadData = () => {
-    fetch("https://swapi.dev/api/planets/?page=1")
+    this.setState({
+      planetData: this.state.currentQuery
+        ? this.state.currentQuery
+        : "Nothing found",
+    });
+    /*     fetch("https://swapi.dev/api/planets/?page=1")
       .then((response: Response) => {
         const result = response.json();
         return result;
       })
       .then((data) => {
         console.log(data.results);
-        this.setState({
-          planetData: this.state.currentQuery
-            ? this.state.currentQuery
-            : "Nothing found",
-        });
-      });
+
+      }); */
   };
 
   componentDidMount(): void {
@@ -47,7 +42,7 @@ class DataManager extends Component<
   render() {
     return (
       <>
-        <SearchString setQueryString={this.setQueryString}></SearchString>
+        <SearchString></SearchString>
         <ResultsDisplay planetData={this.state.planetData}></ResultsDisplay>
       </>
     );

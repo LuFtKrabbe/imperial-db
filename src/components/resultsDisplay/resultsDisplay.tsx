@@ -33,10 +33,7 @@ class ResultsDisplay extends Component<
     return (
       <>
         <div className={styles.displayContainer}>
-          <div className={styles.result}>
-            {this.state.planet}
-            {this.state.planet}
-          </div>
+          <div className={styles.result}>{this.state.planet}</div>
         </div>
       </>
     );
