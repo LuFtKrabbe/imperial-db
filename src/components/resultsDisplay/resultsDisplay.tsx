@@ -21,25 +21,19 @@ class ResultsDisplay extends Component<
     };
   }
 
-  displayData = () => {
-    this.setState({
-      planet: this.props.planetData,
-    });
-  };
-
-  componentDidMount(): void {
-    this.displayData();
-  }
-
   render() {
+    let data = this.state.planet;
+    if (data.length === 0) {
+      data = "---Nothing data has been found---";
+    }
     return (
       <>
         <div className={styles.displayContainer}>
-          {typeof this.state.planet != "string"
-            ? this.state.planet.map((planet, index) => (
+          {typeof data != "string"
+            ? data.map((planet, index) => (
                 <DataCard card={planet} key={index} />
               ))
-            : this.state.planet}
+            : data}
         </div>
       </>
     );

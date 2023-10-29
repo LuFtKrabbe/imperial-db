@@ -4,7 +4,7 @@ import { Component } from "react";
 import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
 import { DataPlanet } from "../../types/types";
-import mockData from "../mockData";
+/* import mockData from "../mockData"; */
 import ErrorButton from "../errorButton/errorButton";
 
 class DataManager extends Component<
@@ -21,8 +21,8 @@ class DataManager extends Component<
     };
   }
 
-  loadData = () => {
-    /*     fetch("https://swapi.dev/api/planets/?page=1")
+  loadDataEndpoint = (endpoint: string): void => {
+    fetch(`https://swapi.dev/api/planets/${endpoint}`)
       .then((response: Response) => {
         const result = response.json();
         return result;
@@ -32,11 +32,21 @@ class DataManager extends Component<
         this.setState({
           planetData: data.results,
         });
-      }); */
-    this.setState({
-      planetData: mockData,
-    });
+      });
   };
+
+  loadData = () => {
+    if (this.state.currentQuery === "") {
+      this.loadDataEndpoint("?page=1");
+    } else {
+      const searchPart = this.state.currentQuery?.trim().toLowerCase();
+      this.loadDataEndpoint(`?search=${searchPart}`);
+    }
+  };
+
+  /*     this.setState({
+    planetData: mockData,
+  }); */
 
   componentDidMount(): void {
     this.loadData();
