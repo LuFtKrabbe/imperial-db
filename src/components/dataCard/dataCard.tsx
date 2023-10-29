@@ -16,8 +16,8 @@ class DataCard extends Component<{ card: DataPlanet; key: number }> {
         <div className={styles.gravity}>Gravity: {gravity}</div>
         <div className={styles.population}>Population: {population}</div>
         <div className={styles.description}>
-          Description: Has the {climate} climate and represents {terrain} as a
-          surface
+          Description: Planet has the {climate} climate and represents {terrain}{" "}
+          as a surface
         </div>
       </div>
     );

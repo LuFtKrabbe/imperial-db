@@ -35,13 +35,11 @@ class ResultsDisplay extends Component<
     return (
       <>
         <div className={styles.displayContainer}>
-          <div className={styles.result}>
-            {typeof this.state.planet != "string"
-              ? this.state.planet.map((planet, index) => (
-                  <DataCard card={planet} key={index} />
-                ))
-              : this.state.planet}
-          </div>
+          {typeof this.state.planet != "string"
+            ? this.state.planet.map((planet, index) => (
+                <DataCard card={planet} key={index} />
+              ))
+            : this.state.planet}
         </div>
       </>
     );
