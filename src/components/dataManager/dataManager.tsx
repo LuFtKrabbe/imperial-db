@@ -6,7 +6,7 @@ import ResultsDisplay from "../resultsDisplay/resultsDisplay";
 
 class DataManager extends Component<
   Record<string, never>,
-  { currentQuery: string | null; planetData: string }
+  { currentQuery: string | null; planetData: Array<string> }
 > {
   constructor(props: Record<string, never>) {
     super(props);
@@ -14,15 +14,13 @@ class DataManager extends Component<
       currentQuery: localStorage.getItem("lastQuery")
         ? localStorage.getItem("lastQuery")
         : "",
-      planetData: "Planet",
+      planetData: ["Planet1", "Planet2"],
     };
   }
 
   loadData = () => {
     this.setState({
-      planetData: this.state.currentQuery
-        ? this.state.currentQuery
-        : "Nothing found",
+      planetData: ["Planet1", "Planet2"],
     });
     /*     fetch("https://swapi.dev/api/planets/?page=1")
       .then((response: Response) => {

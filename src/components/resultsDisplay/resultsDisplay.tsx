@@ -1,12 +1,13 @@
 import { Component } from "react";
 
 import styles from "./resultsDisplay.module.css";
+import DataCard from "../dataCard/dataCard";
 
 class ResultsDisplay extends Component<
-  Record<string, string>,
-  { planet: string }
+  Record<string, Array<string>>,
+  { planet: Array<string> }
 > {
-  constructor(props: Record<string, string>) {
+  constructor(props: Record<string, Array<string>>) {
     super(props);
     this.state = {
       planet: this.props.planetData,
@@ -33,7 +34,11 @@ class ResultsDisplay extends Component<
     return (
       <>
         <div className={styles.displayContainer}>
-          <div className={styles.result}>{this.state.planet}</div>
+          <div className={styles.result}>
+            {this.state.planet.map((planet, index) => (
+              <DataCard card={planet} key={index} />
+            ))}
+          </div>
         </div>
       </>
     );
