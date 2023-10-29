@@ -25,21 +25,26 @@ class DataManager extends Component<
   };
 
   loadData = () => {
-    this.setState({
-      planetData: this.state.currentQuery
-        ? this.state.currentQuery
-        : "Nothing found",
-    });
+    fetch("https://swapi.dev/api/planets/?page=1")
+      .then((response: Response) => {
+        const result = response.json();
+        return result;
+      })
+      .then((data) => {
+        console.log(data.results);
+        this.setState({
+          planetData: this.state.currentQuery
+            ? this.state.currentQuery
+            : "Nothing found",
+        });
+      });
   };
 
   componentDidMount(): void {
-    console.log(this.state.currentQuery);
     this.loadData();
   }
 
   render() {
-    console.log(this.state.currentQuery);
-    console.log(this.state.planetData);
     return (
       <>
         <SearchString setQueryString={this.setQueryString}></SearchString>

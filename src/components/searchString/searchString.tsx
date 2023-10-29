@@ -27,14 +27,6 @@ class SearchString extends Component<
     }
     console.log(this.state.searchInput);
     event.preventDefault();
-    fetch("https://swapi.dev/api/planets/?page=1")
-      .then((response: Response) => {
-        const result = response.json();
-        return result;
-      })
-      .then((data) => {
-        console.log(data.results);
-      });
   };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

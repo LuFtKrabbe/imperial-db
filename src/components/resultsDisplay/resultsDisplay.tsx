@@ -30,7 +30,6 @@ class ResultsDisplay extends Component<
   }
 
   render() {
-    console.log(this.state.planet);
     return (
       <>
         <div className={styles.displayContainer}>
