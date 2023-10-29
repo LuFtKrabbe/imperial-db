@@ -17,14 +17,14 @@ class SearchString extends Component<Record<string, never>, DataSearch> {
     this.inputRef = React.createRef<HTMLInputElement>();
   }
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  onInputStringChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       searchInput: event.target.value,
     });
   };
 
-  handleSubmit = () => {
-    if (this.state.searchInput) {
+  onFormSubmit = () => {
+    if (this.state.searchInput || this.state.searchInput === "") {
       localStorage.setItem("lastQuery", this.state.searchInput);
     }
   };
@@ -38,11 +38,12 @@ class SearchString extends Component<Record<string, never>, DataSearch> {
   render() {
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.onFormSubmit}>
           <div className={styles.searchContainer}>
             <input
               className={styles.searchInput}
-              onChange={this.handleChange}
+              onChange={this.onInputStringChange}
+              placeholder="Enter the planet name..."
               ref={this.inputRef}
               type="text"
             ></input>
