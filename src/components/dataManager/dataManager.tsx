@@ -3,10 +3,12 @@ import { Component } from "react";
 
 import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
+import { DataPlanet } from "../../types/types";
+import mockData from "../mockData";
 
 class DataManager extends Component<
   Record<string, never>,
-  { currentQuery: string | null; planetData: Array<string> }
+  { currentQuery: string | null; planetData: Array<DataPlanet> | string }
 > {
   constructor(props: Record<string, never>) {
     super(props);
@@ -14,14 +16,11 @@ class DataManager extends Component<
       currentQuery: localStorage.getItem("lastQuery")
         ? localStorage.getItem("lastQuery")
         : "",
-      planetData: ["Planet1", "Planet2"],
+      planetData: "Searching...",
     };
   }
 
   loadData = () => {
-    this.setState({
-      planetData: ["Planet1", "Planet2"],
-    });
     /*     fetch("https://swapi.dev/api/planets/?page=1")
       .then((response: Response) => {
         const result = response.json();
@@ -29,8 +28,13 @@ class DataManager extends Component<
       })
       .then((data) => {
         console.log(data.results);
-
+        this.setState({
+          planetData: data.results,
+        });
       }); */
+    this.setState({
+      planetData: mockData,
+    });
   };
 
   componentDidMount(): void {
