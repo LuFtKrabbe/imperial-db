@@ -21,7 +21,8 @@ class ErrorBoundary extends Component<
       return (
         <>
           <h1>Wrong access!</h1>
-          <h2>Insert your officer device to prove your identity!</h2>
+          <h2>Insert your officer device to prove your identity</h2>
+          <h2> and download data!</h2>
         </>
       );
     }

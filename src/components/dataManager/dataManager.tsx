@@ -55,6 +55,7 @@ class DataManager extends Component<
   render() {
     return (
       <>
+        <h1>IMPERIAL PLANETARY DATABASE</h1>
         <SearchString></SearchString>
         <ErrorButton></ErrorButton>
         <ResultsDisplay planetData={this.state.planetData}></ResultsDisplay>
