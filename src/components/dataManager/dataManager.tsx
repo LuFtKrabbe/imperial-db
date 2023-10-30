@@ -2,20 +2,17 @@ import { Component } from "react";
 
 import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
-import { DataPlanet } from "../../types/types";
+import { DataQueryResult } from "../../types/types";
 import ErrorButton from "../errorButton/errorButton";
 
-class DataManager extends Component<
-  Record<string, never>,
-  { currentQuery: string | null; planetData: Array<DataPlanet> | string }
-> {
+class DataManager extends Component<Record<string, never>, DataQueryResult> {
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       currentQuery: localStorage.getItem("lastQuery")
         ? localStorage.getItem("lastQuery")
         : "",
-      planetData: "Searching...",
+      resultData: "Searching...",
     };
   }
 
@@ -24,7 +21,7 @@ class DataManager extends Component<
       .then((response: Response) => response.json())
       .then((data) => {
         this.setState({
-          planetData: data.results,
+          resultData: data.results,
         });
       });
   };
@@ -48,7 +45,7 @@ class DataManager extends Component<
         <h1>IMPERIAL PLANETARY DATABASE</h1>
         <SearchString></SearchString>
         <ErrorButton></ErrorButton>
-        <ResultsDisplay planetData={this.state.planetData}></ResultsDisplay>
+        <ResultsDisplay planetData={this.state.resultData}></ResultsDisplay>
       </>
     );
   }

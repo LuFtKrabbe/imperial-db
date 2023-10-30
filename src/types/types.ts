@@ -1,3 +1,8 @@
+export type DataQueryResult = {
+  currentQuery: string | null;
+  resultData: Array<DataPlanet> | string;
+};
+
 export type DataPlanet = {
   climate: string;
   created: string;
@@ -14,6 +19,11 @@ export type DataPlanet = {
   terrain: string;
   url: string;
 };
+
+/* export type DataPlanetCard = {
+  card: DataPlanet; 
+  key: number;
+}; */
 
 export type DataSearch = {
   searchInput: string | null;

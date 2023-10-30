@@ -5,24 +5,14 @@ import DataCard from "../dataCard/dataCard";
 import { DataPlanet } from "../../types/types";
 
 class ResultsDisplay extends Component<
-  Record<string, Array<DataPlanet> | string>,
-  { planets: Array<DataPlanet> | string }
+  Record<string, Array<DataPlanet> | string>
 > {
   constructor(props: Record<string, Array<DataPlanet> | string>) {
     super(props);
-    this.state = {
-      planets: this.props.planetData,
-    };
-  }
-
-  static getDerivedStateFromProps(props: Record<string, string>) {
-    return {
-      planets: props.planetData,
-    };
   }
 
   render() {
-    let data = this.state.planets;
+    let data = this.props.planetData;
     if (data.length === 0) {
       data = "--- Nothing data has been found ---";
     }
