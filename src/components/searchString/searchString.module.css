@@ -9,9 +9,15 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   width: 400px;
   height: 30px;
+}
+
+.searchInput:hover {
+  border-color: #ffe864;
+  border-radius: 3px;
+  border-width: 1px;
 }
 
 .searchButton {
@@ -24,7 +30,7 @@
   height: 32px;
   border-radius: 4px;
   border: 1px solid transparent;
-  font-size: 1em;
+  font-size: 1.1em;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
@@ -38,6 +44,6 @@
 
 .searchButton:focus,
 .searchButton:focus-visible {
-  outline: 4px auto #ffe864;
-  border-color: #ffe864;
+  outline: 4px auto #ffe864 !important;
+  border-color: #ffe864 !important;
 }

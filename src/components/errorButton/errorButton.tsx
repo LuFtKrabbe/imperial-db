@@ -10,13 +10,13 @@ class ErrorButton extends Component<
     super(props);
     this.state = {
       error: false,
-      message: "Get data to the officer code cylinder",
+      message: "GET DATA TO THE OFFICER CODE CYLINDER",
     };
   }
 
   throwError = () => {
     this.setState({
-      message: "Verifying your Identity...",
+      message: "VERIFYING YOUR IDENTITY...",
     });
     setTimeout(() => {
       this.setState({
