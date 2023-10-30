@@ -1,10 +1,8 @@
-import React from "react";
 import { Component } from "react";
 
 import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
 import { DataPlanet } from "../../types/types";
-/* import mockData from "../mockData"; */
 import ErrorButton from "../errorButton/errorButton";
 
 class DataManager extends Component<
@@ -21,14 +19,10 @@ class DataManager extends Component<
     };
   }
 
-  loadDataEndpoint = (endpoint: string): void => {
+  loadDataEndpoint = (endpoint: string) => {
     fetch(`https://swapi.dev/api/planets/${endpoint}`)
-      .then((response: Response) => {
-        const result = response.json();
-        return result;
-      })
+      .then((response: Response) => response.json())
       .then((data) => {
-        console.log(data.results);
         this.setState({
           planetData: data.results,
         });
@@ -36,19 +30,15 @@ class DataManager extends Component<
   };
 
   loadData = () => {
-    if (this.state.currentQuery === "") {
-      this.loadDataEndpoint("?page=1");
-    } else {
-      const searchPart = this.state.currentQuery?.trim().toLowerCase();
+    if (this.state.currentQuery !== "" && this.state.currentQuery) {
+      const searchPart = this.state.currentQuery.trim().toLowerCase();
       this.loadDataEndpoint(`?search=${searchPart}`);
+    } else {
+      this.loadDataEndpoint("?page=1");
     }
   };
 
-  /*     this.setState({
-    planetData: mockData,
-  }); */
-
-  componentDidMount(): void {
+  componentDidMount() {
     this.loadData();
   }
 

@@ -10,7 +10,7 @@ class ErrorButton extends Component<
     super(props);
     this.state = {
       error: false,
-      message: "Get data to the secret officer device",
+      message: "Get data to the officer code cylinder",
     };
   }
 
