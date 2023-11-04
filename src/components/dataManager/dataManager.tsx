@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
@@ -16,20 +16,18 @@ function DataManager() {
       });
   };
 
-  const loadData = () => {
+  useEffect(() => {
     const searchPart = currentSearchQuery.trim().toLowerCase();
     const query = searchPart ? `?search=${searchPart}` : "?page=1";
     loadDataEndpoint(query);
-  };
-
-  loadData();
+  }, [currentSearchQuery]);
 
   return (
     <>
       <h1>IMPERIAL PLANETARY DATABASE</h1>
-      <SearchString></SearchString>
-      <ErrorButton></ErrorButton>
-      <ResultsDisplay planetData={resultData}></ResultsDisplay>
+      <SearchString />
+      <ErrorButton />
+      <ResultsDisplay planetData={resultData} />
     </>
   );
 }
