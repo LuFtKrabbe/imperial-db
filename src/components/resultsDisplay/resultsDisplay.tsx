@@ -1,29 +1,18 @@
-import { Component } from "react";
-
 import styles from "./resultsDisplay.module.css";
 import DataCard from "../dataCard/dataCard";
 import { DataPlanet } from "../../types/types";
 
-class ResultsDisplay extends Component<
-  Record<string, Array<DataPlanet> | string>
-> {
-  constructor(props: Record<string, Array<DataPlanet> | string>) {
-    super(props);
-  }
+function ResultsDisplay(props: Record<string, Array<DataPlanet>>): JSX.Element {
+  const planetData = props.planetData;
+  const messageNothingFound = "--- Nothing data has been found ---";
 
-  render() {
-    let data = this.props.planetData;
-    if (data.length === 0) {
-      data = "--- Nothing data has been found ---";
-    }
-    return (
-      <div className={styles.displayContainer}>
-        {typeof data != "string"
-          ? data.map((planet, i) => <DataCard card={planet} key={i} />)
-          : data}
-      </div>
-    );
-  }
+  return (
+    <div className={styles.displayContainer}>
+      {planetData.length
+        ? planetData.map((planet, i) => <DataCard card={planet} key={i} />)
+        : messageNothingFound}
+    </div>
+  );
 }
 
 export default ResultsDisplay;

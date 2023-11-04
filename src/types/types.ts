@@ -1,6 +1,6 @@
 export type DataQueryResult = {
   currentQuery: string | null;
-  resultData: Array<DataPlanet> | string;
+  resultData: Array<DataPlanet>;
 };
 
 export type DataPlanet = {
