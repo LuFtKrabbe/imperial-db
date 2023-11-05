@@ -3,9 +3,11 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  border-radius: 10px;
-  width: 100%;
-  height: 50px;
+  background-color: rgb(53, 53, 53);
+  border-radius: 6px;
+  margin: 10px 0;
+  width: 600px;
+  height: 40px;
 }
 
 .paginationPages {
@@ -15,18 +17,21 @@
   box-sizing: border-box;
   border-radius: 10px;
   width: 80%;
-  height: 100%;
+  height: 30px;
 }
 
 .paginationPage {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  font-weight: 500;
+  font-family: inherit;
   border-radius: 4px;
   height: 30px;
   width: 30px;
   margin: 0px 4px;
-  color: grey;
+  color: rgb(182, 182, 182);
   background-color: rgb(29, 27, 26);
 }
 
@@ -36,17 +41,36 @@
   justify-content: center;
   box-sizing: border-box;
   min-width: 20%;
+  border-left: solid rgb(26, 26, 26) 2px;
 }
 
 .paginationQuantity {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
   height: 30px;
   width: 50px;
-  margin: 0px 0px;
-  color: grey;
+  color: rgb(182, 182, 182);
   background-color: rgb(29, 27, 26);
+}
+
+.paginationQuantities button:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-right: 1px solid black;
+}
+
+.paginationQuantities button:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.paginationPage:hover,
+.paginationQuantity:hover {
+  background-color: rgb(37, 37, 37);
 }
