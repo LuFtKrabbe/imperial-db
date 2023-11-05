@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
@@ -10,53 +10,46 @@ import { Outlet } from "react-router-dom";
 
 function DataManager() {
   console.log("Data Manager is loaded");
-  const [searchQuery, setSearchQuery] = useState(
-    localStorage.getItem("lastSearchQuery") || "",
-  );
+  const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
 
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(lastSearchQuery);
   const [itemsQuantity, setItemsQuantity] = useState<number>(0);
-  const [page, setPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState("10");
+  const [planetData, setPlanetData] = useState<DataPlanet[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [resultData, setResultData] = useState<DataPlanet[]>([]);
+  const [itemsPerPage, setItemsPerPage] = useState("10");
+  const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
-  const setSearchQueryCb = useCallback((searchQuery: string) => {
+  const goToFirstPage = () => {
+    setPage(1);
+    navigate(`?page=1`);
+  };
+
+  const setSearchQueryCb = (searchQuery: string) => {
     setSearchQuery(searchQuery);
-    if (searchQuery || searchQuery === "") {
-      localStorage.setItem("lastSearchQuery", searchQuery);
-    }
-  }, []);
+    localStorage.setItem("lastSearchQuery", searchQuery);
+    goToFirstPage();
+  };
 
-  const setItemsPerPageCb = useCallback(
-    (itemsPerPage: string) => {
-      setItemsPerPage(itemsPerPage);
-      setPage(1);
-      navigate(`?page=1`);
-    },
-    [navigate],
-  );
+  const setItemsPerPageCb = (itemsPerPage: string) => {
+    setItemsPerPage(itemsPerPage);
+    goToFirstPage();
+  };
 
-  const setPageCb = useCallback((Page: string) => {
-    setPage(Number(Page));
-  }, []);
+  const setPageCb = (page: number) => setPage(page);
 
-  const loadData = (
-    endpoint: string,
-    itemsPerPage = "10",
-    currentPage: number,
-  ) => {
+  const loadData = (query: string, itemsPerPage = "10", page: number) => {
     setIsDataLoading(true);
     console.log("_________Data SEARCH__________");
-    fetch(`https://swapi.dev/api/planets/${endpoint}`)
+    fetch(`https://swapi.dev/api/planets/${query}`)
       .then((response: Response) => response.json())
       .then((data) => {
-        const resultData: DataPlanet[] = data.results;
+        const planetData: DataPlanet[] = data.results;
         const filteredData =
-          currentPage % 2
-            ? resultData.filter((val, i) => i < 5)
-            : resultData.filter((val, i) => i >= 5);
-        setResultData(itemsPerPage === "10" ? resultData : filteredData);
+          page % 2
+            ? planetData.filter((val, i) => i < 5)
+            : planetData.filter((val, i) => i >= 5);
+        setPlanetData(itemsPerPage === "10" ? planetData : filteredData);
         setItemsQuantity(Number(data.count));
         setIsDataLoading(false);
       });
@@ -81,18 +74,16 @@ function DataManager() {
           searchQueryProp={searchQuery}
         />
         <ErrorButton />
-        {
-          <Pagination
-            setPageMethod={setPageCb}
-            setItemsPerPageMethod={setItemsPerPageCb}
-            itemsPerPageProp={itemsPerPage}
-            itemsQuantityProp={itemsQuantity}
-          />
-        }
+        <Pagination
+          setPageMethod={setPageCb}
+          setItemsPerPageMethod={setItemsPerPageCb}
+          itemsPerPageProp={itemsPerPage}
+          itemsQuantityProp={itemsQuantity}
+        />
         {isDataLoading ? (
           <h1>Loading...</h1>
         ) : (
-          <ResultsDisplay planetData={resultData} pageProp={page} />
+          <ResultsDisplay planetDataProp={planetData} pageProp={page} />
         )}
       </div>
       <Outlet />

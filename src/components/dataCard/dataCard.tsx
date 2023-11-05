@@ -3,13 +3,13 @@ import { DataPlanet } from "../../types/types";
 import { useNavigate } from "react-router";
 
 function DataCard(props: {
-  card: DataPlanet;
   key: string;
-  cardNumProp: number;
+  itemProp: DataPlanet;
+  itemNumProp: number;
   pageProp: number;
 }): JSX.Element {
-  const { name, population, climate, terrain, gravity, url } = props.card;
-  const { pageProp, cardNumProp } = props;
+  const { name, population, climate, terrain, gravity, url } = props.itemProp;
+  const { pageProp, itemNumProp } = props;
   const id = url.split("/").slice(-2)[0];
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function DataCard(props: {
     <div
       className={styles.card}
       onClick={() => {
-        navigate(`card/?frontpage=${pageProp}&details=${cardNumProp}&id=${id}`);
+        navigate(`card/?frontpage=${pageProp}&details=${itemNumProp}&id=${id}`);
       }}
     >
       <div className={styles.name}>{name}</div>

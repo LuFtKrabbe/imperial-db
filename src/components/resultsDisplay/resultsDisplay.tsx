@@ -3,11 +3,11 @@ import DataCard from "../dataCard/dataCard";
 import { DataPlanet } from "../../types/types";
 
 function ResultsDisplay(props: {
-  planetData: Array<DataPlanet>;
+  planetDataProp: Array<DataPlanet>;
   pageProp: number;
 }): JSX.Element {
   console.log("Display is loaded");
-  const planetData = props.planetData;
+  const planetData = props.planetDataProp;
 
   return (
     <div className={styles.displayContainer}>
@@ -15,8 +15,8 @@ function ResultsDisplay(props: {
         planetData.map((planet, i) => (
           <DataCard
             key={planet.name}
-            card={planet}
-            cardNumProp={i + 1}
+            itemProp={planet}
+            itemNumProp={i + 1}
             pageProp={props.pageProp}
           />
         ))

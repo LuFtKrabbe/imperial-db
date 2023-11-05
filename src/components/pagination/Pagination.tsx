@@ -2,7 +2,7 @@ import styles from "./pagination.module.css";
 import { Link } from "react-router-dom";
 
 function Pagination(props: {
-  setPageMethod: (page: string) => void;
+  setPageMethod: (page: number) => void;
   setItemsPerPageMethod: (itemsPerPage: string) => void;
   itemsPerPageProp: string;
   itemsQuantityProp: number;
@@ -27,7 +27,7 @@ function Pagination(props: {
               className={styles.paginationPage}
               key={i}
               to={`?page=${value}`}
-              onClick={() => props.setPageMethod(`${value}`)}
+              onClick={() => props.setPageMethod(value)}
             >
               {value}
             </Link>
