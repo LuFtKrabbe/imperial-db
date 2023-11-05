@@ -6,6 +6,7 @@ import ErrorButton from "../errorButton/errorButton";
 import Pagination from "../pagination/Pagination";
 import { DataPlanet } from "../../types/types";
 import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function DataManager() {
   console.log("Data Manager is loaded");
@@ -73,25 +74,28 @@ function DataManager() {
 
   return (
     <>
-      <h1>IMPERIAL PLANETARY DATABASE</h1>
-      <SearchString
-        setSearchQueryMethod={setSearchQueryCb}
-        searchQueryProp={searchQuery}
-      />
-      <ErrorButton />
-      {
-        <Pagination
-          setPageMethod={setPageCb}
-          setItemsPerPageMethod={setItemsPerPageCb}
-          itemsPerPageProp={itemsPerPage}
-          itemsQuantityProp={itemsQuantity}
+      <div>
+        <h1>IMPERIAL PLANETARY DATABASE</h1>
+        <SearchString
+          setSearchQueryMethod={setSearchQueryCb}
+          searchQueryProp={searchQuery}
         />
-      }
-      {isDataLoading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <ResultsDisplay planetData={resultData} />
-      )}
+        <ErrorButton />
+        {
+          <Pagination
+            setPageMethod={setPageCb}
+            setItemsPerPageMethod={setItemsPerPageCb}
+            itemsPerPageProp={itemsPerPage}
+            itemsQuantityProp={itemsQuantity}
+          />
+        }
+        {isDataLoading ? (
+          <h1>Loading...</h1>
+        ) : (
+          <ResultsDisplay planetData={resultData} pageProp={page} />
+        )}
+      </div>
+      <Outlet />
     </>
   );
 }
