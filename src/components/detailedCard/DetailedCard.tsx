@@ -32,14 +32,30 @@ function DetailedCard(): JSX.Element {
           }}
         ></div>
         <div className={styles.panel}>
-          {isDataLoading ? <h1>Loading...</h1> : <div>{resultData?.name}</div>}
+          {isDataLoading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <div className={styles.nameListContainer}>
+              <h1 className={styles.name}>{resultData?.name}</h1>
+              <div className={styles.list}>
+                <div>Rotation period: {resultData?.rotation_period}</div>
+                <div>Orbital Period: {resultData?.orbital_period}</div>
+                <div>Diameter: {resultData?.diameter}</div>
+                <div>Climate: {resultData?.climate}</div>
+                <div>Gravity: {resultData?.gravity}</div>
+                <div>Terrain: {resultData?.terrain}</div>
+                <div>Surface water: {resultData?.surface_water}</div>
+                <div>Population: {resultData?.population}</div>
+              </div>
+            </div>
+          )}
           <button
             className={styles.closeButton}
             onClick={() => {
               navigate(-1);
             }}
           >
-            Close
+            CLOSE
           </button>
         </div>
       </div>
