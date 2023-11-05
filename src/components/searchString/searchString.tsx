@@ -2,21 +2,21 @@ import React, { useState } from "react";
 
 import styles from "./searchString.module.css";
 
-function SearchString(): JSX.Element {
-  const [searchQuery, setSearchQuery] = useState(
-    localStorage.getItem("lastSearchQuery") || "",
-  );
+function SearchString(props: {
+  setSearchQueryMethod: (searchQuery: string) => void;
+  searchQueryProp: string;
+}): JSX.Element {
+  console.log("Search String is loaded");
+  const [searchQuery, setSearchQuery] = useState(props.searchQueryProp);
 
-  const onInputStringChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchQuery(event.target.value);
+    event.preventDefault();
   };
 
-  const onFormSubmit = (): void => {
-    if (searchQuery || searchQuery === "") {
-      localStorage.setItem("lastSearchQuery", searchQuery);
-    }
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    props.setSearchQueryMethod(searchQuery);
   };
 
   return (
@@ -25,7 +25,7 @@ function SearchString(): JSX.Element {
         <div className={styles.searchContainer}>
           <input
             className={styles.searchInput}
-            onChange={onInputStringChange}
+            onChange={onInputChange}
             placeholder="Enter the planet name..."
             value={searchQuery}
             type="text"
