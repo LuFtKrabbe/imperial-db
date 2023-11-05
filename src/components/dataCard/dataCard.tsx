@@ -1,13 +1,8 @@
 import styles from "./dataCard.module.css";
-import { DataPlanet } from "../../types/types";
+import { DataCardProps } from "../../types/types";
 import { useNavigate } from "react-router";
 
-function DataCard(props: {
-  key: string;
-  itemProp: DataPlanet;
-  itemNumProp: number;
-  pageProp: number;
-}): JSX.Element {
+function DataCard(props: DataCardProps): JSX.Element {
   const { name, population, climate, terrain, gravity, url } = props.itemProp;
   const { pageProp, itemNumProp } = props;
   const id = url.split("/").slice(-2)[0];

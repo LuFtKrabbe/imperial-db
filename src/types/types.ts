@@ -1,8 +1,3 @@
-export type DataQueryResult = {
-  currentQuery: string | null;
-  resultData: Array<DataPlanet>;
-};
-
 export type DataPlanet = {
   climate: string;
   created: string;
@@ -20,11 +15,32 @@ export type DataPlanet = {
   url: string;
 };
 
-/* export type DataPlanetCard = {
-  card: DataPlanet; 
-  key: number;
-}; */
+export type LoadData = (
+  query: string,
+  page: number,
+  itemsPerPage: string,
+) => void;
 
-export type DataSearch = {
-  searchInput: string | null;
+export type DataCardProps = {
+  key: string;
+  itemProp: DataPlanet;
+  itemNumProp: number;
+  pageProp: number;
+};
+
+export type ResultsDisplayProps = {
+  planetDataProp: Array<DataPlanet>;
+  pageProp: number;
+};
+
+export type PaginationProps = {
+  setPageMethod: (page: number) => void;
+  setItemsPerPageMethod: (itemsPerPage: string) => void;
+  itemsPerPageProp: string;
+  itemsQuantityProp: number;
+};
+
+export type SearchStringProps = {
+  setSearchQueryMethod: (searchQuery: string) => void;
+  searchQueryProp: string;
 };

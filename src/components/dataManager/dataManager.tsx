@@ -4,12 +4,10 @@ import SearchString from "../searchString/searchString";
 import ResultsDisplay from "../resultsDisplay/resultsDisplay";
 import ErrorButton from "../errorButton/errorButton";
 import Pagination from "../pagination/Pagination";
-import { DataPlanet } from "../../types/types";
-import { useNavigate } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
+import { DataPlanet, LoadData } from "../../types/types";
 
 function DataManager() {
-  console.log("Data Manager is loaded");
   const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
 
   const [searchQuery, setSearchQuery] = useState(lastSearchQuery);
@@ -38,9 +36,8 @@ function DataManager() {
 
   const setPageCb = (page: number) => setPage(page);
 
-  const loadData = (query: string, itemsPerPage = "10", page: number) => {
+  const loadData: LoadData = (query, page, itemsPerPage) => {
     setIsDataLoading(true);
-    console.log("_________Data SEARCH__________");
     fetch(`https://swapi.dev/api/planets/${query}`)
       .then((response: Response) => response.json())
       .then((data) => {
@@ -62,8 +59,8 @@ function DataManager() {
     const query = searchPart
       ? `?search=${searchPart}&page=${pageForBackEndQuery}`
       : `?page=${pageForBackEndQuery}`;
-    loadData(query, itemsPerPage, page);
-  }, [searchQuery, itemsPerPage, page]);
+    loadData(query, page, itemsPerPage);
+  }, [searchQuery, page, itemsPerPage]);
 
   return (
     <>

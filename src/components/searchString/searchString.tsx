@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-
+import { SearchStringProps } from "../../types/types";
 import styles from "./searchString.module.css";
 
-function SearchString(props: {
-  setSearchQueryMethod: (searchQuery: string) => void;
-  searchQueryProp: string;
-}): JSX.Element {
-  console.log("Search String is loaded");
+function SearchString(props: SearchStringProps): JSX.Element {
   const [searchQuery, setSearchQuery] = useState(props.searchQueryProp);
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {

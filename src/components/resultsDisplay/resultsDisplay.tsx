@@ -1,12 +1,8 @@
 import styles from "./resultsDisplay.module.css";
 import DataCard from "../dataCard/dataCard";
-import { DataPlanet } from "../../types/types";
+import { ResultsDisplayProps } from "../../types/types";
 
-function ResultsDisplay(props: {
-  planetDataProp: Array<DataPlanet>;
-  pageProp: number;
-}): JSX.Element {
-  console.log("Display is loaded");
+function ResultsDisplay(props: ResultsDisplayProps): JSX.Element {
   const planetData = props.planetDataProp;
 
   return (

@@ -1,12 +1,8 @@
 import styles from "./pagination.module.css";
+import { PaginationProps } from "../../types/types";
 import { Link } from "react-router-dom";
 
-function Pagination(props: {
-  setPageMethod: (page: number) => void;
-  setItemsPerPageMethod: (itemsPerPage: string) => void;
-  itemsPerPageProp: string;
-  itemsQuantityProp: number;
-}): JSX.Element {
+function Pagination(props: PaginationProps): JSX.Element {
   console.log("Pagination is loaded");
 
   const count =
