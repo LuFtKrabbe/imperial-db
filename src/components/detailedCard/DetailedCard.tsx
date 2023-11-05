@@ -17,6 +17,11 @@ function DetailedCard(): JSX.Element {
       .then((data) => {
         setResultData(data);
         setIsDataLoading(false);
+      })
+      .catch(() => {
+        console.log("Can't load data for DetailedCard");
+        alert("Data couldn't be loaded. Check the console log!");
+        setIsDataLoading(false);
       });
   }, [searchParams]);
 

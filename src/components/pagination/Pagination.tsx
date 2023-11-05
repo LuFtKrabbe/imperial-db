@@ -3,8 +3,6 @@ import { PaginationProps } from "../../types/types";
 import { Link } from "react-router-dom";
 
 function Pagination(props: PaginationProps): JSX.Element {
-  console.log("Pagination is loaded");
-
   const count =
     props.itemsPerPageProp === "10"
       ? Math.ceil(props.itemsQuantityProp / 10)

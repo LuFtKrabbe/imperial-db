@@ -49,6 +49,11 @@ function DataManager() {
         setPlanetData(itemsPerPage === "10" ? planetData : filteredData);
         setItemsQuantity(Number(data.count));
         setIsDataLoading(false);
+      })
+      .catch(() => {
+        console.log("Can't load data for DetailedCard");
+        alert("Data couldn't be loaded. Check the console log!");
+        setIsDataLoading(false);
       });
   };
 
