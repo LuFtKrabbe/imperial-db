@@ -42,6 +42,7 @@ export type ResultsDisplayProps = {
 export type PaginationProps = {
   setPageMethod: (page: number) => void;
   setItemsPerPageMethod: (itemsPerPage: string) => void;
+  pageProp: number;
   itemsPerPageProp: string;
   itemsQuantityProp: number;
 };

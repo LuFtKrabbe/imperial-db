@@ -79,6 +79,7 @@ function DataManager() {
         <Pagination
           setPageMethod={setPageCb}
           setItemsPerPageMethod={setItemsPerPageCb}
+          pageProp={page}
           itemsPerPageProp={itemsPerPage}
           itemsQuantityProp={itemsQuantity}
         />
