@@ -1,3 +1,10 @@
+export type DataPlanetResponse = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: DataPlanet[];
+};
+
 export type DataPlanet = {
   climate: string;
   created: string;
@@ -15,11 +22,10 @@ export type DataPlanet = {
   url: string;
 };
 
-export type LoadData = (
-  query: string,
-  page: number,
-  itemsPerPage: string,
-) => void;
+export type GetPartPlanetData = (
+  part: "firstHalf" | "secondHalf",
+  data: DataPlanet[],
+) => DataPlanet[];
 
 export type DataCardProps = {
   key: string;

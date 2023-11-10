@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { DataPlanet } from "../../types/types";
+import { fetchPlanet } from "../../utils/utils";
 
 function DetailedCard(): JSX.Element {
   const [searchParams] = useSearchParams();
@@ -12,17 +13,15 @@ function DetailedCard(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://swapi.dev/api/planets/${searchParams.get("id")}`)
-      .then((response: Response) => response.json())
+    fetchPlanet(`${searchParams.get("id")}`)
       .then((data) => {
         setResultData(data);
-        setIsDataLoading(false);
       })
       .catch(() => {
         console.log("Can't load data for DetailedCard");
         alert("Data couldn't be loaded. Check the console log!");
-        setIsDataLoading(false);
-      });
+      })
+      .finally(() => setIsDataLoading(false));
   }, [searchParams]);
 
   return (

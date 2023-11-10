@@ -5,7 +5,8 @@ import ResultsDisplay from "../resultsDisplay/resultsDisplay";
 import ErrorButton from "../errorButton/errorButton";
 import Pagination from "../pagination/Pagination";
 import { useNavigate, Outlet } from "react-router-dom";
-import { DataPlanet, LoadData } from "../../types/types";
+import { DataPlanet, GetPartPlanetData } from "../../types/types";
+import { fetchPlanetData, isOdd } from "../../utils/utils";
 
 function DataManager() {
   const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
@@ -36,25 +37,11 @@ function DataManager() {
 
   const setPageCb = (page: number) => setPage(page);
 
-  const loadData: LoadData = (query, page, itemsPerPage) => {
-    setIsDataLoading(true);
-    fetch(`https://swapi.dev/api/planets/${query}`)
-      .then((response: Response) => response.json())
-      .then((data) => {
-        const planetData: DataPlanet[] = data.results;
-        const filteredData =
-          page % 2
-            ? planetData.filter((val, i) => i < 5)
-            : planetData.filter((val, i) => i >= 5);
-        setPlanetData(itemsPerPage === "10" ? planetData : filteredData);
-        setItemsQuantity(Number(data.count));
-        setIsDataLoading(false);
-      })
-      .catch(() => {
-        console.log("Can't load data for DetailedCard");
-        alert("Data couldn't be loaded. Check the console log!");
-        setIsDataLoading(false);
-      });
+  const getPartPlanetData: GetPartPlanetData = (part, data) => {
+    const totalItems = 10;
+    return part === "firstHalf"
+      ? data.filter((_, i) => i < totalItems / 2)
+      : data.filter((_, i) => i >= totalItems / 2);
   };
 
   useEffect(() => {
@@ -64,7 +51,20 @@ function DataManager() {
     const query = searchPart
       ? `?search=${searchPart}&page=${pageForBackEndQuery}`
       : `?page=${pageForBackEndQuery}`;
-    loadData(query, page, itemsPerPage);
+    setIsDataLoading(true);
+    fetchPlanetData(`${query}`)
+      .then((data) => {
+        const planetData = data.results;
+        const part = isOdd(page) ? "firstHalf" : "secondHalf";
+        const partPlanetData = getPartPlanetData(part, planetData);
+        setPlanetData(itemsPerPage === "10" ? planetData : partPlanetData);
+        setItemsQuantity(data.count);
+      })
+      .catch(() => {
+        console.log("Can't load planets data from API");
+        alert("Data couldn't be loaded. Check the console log!");
+      })
+      .finally(() => setIsDataLoading(false));
   }, [searchQuery, page, itemsPerPage]);
 
   return (
