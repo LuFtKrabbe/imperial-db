@@ -1,5 +1,5 @@
 import "./App.css";
-import DataManager from "./components/dataManager/dataManager";
+import DataManager from "./components/dataManager/DataManager";
 import DetailedCard from "./components/detailedCard/DetailedCard";
 import ErrorBoundary from "./components/ErrorBoundary";
 

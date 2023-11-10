@@ -1,4 +1,4 @@
-import styles from "./dataCard.module.css";
+import styles from "./DataCard.module.css";
 import { DataCardProps } from "../../types/types";
 import { useNavigate } from "react-router";
 

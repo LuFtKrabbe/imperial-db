@@ -1,5 +1,5 @@
-import styles from "./resultsDisplay.module.css";
-import DataCard from "../dataCard/dataCard";
+import styles from "./ResultsDisplay.module.css";
+import DataCard from "../dataCard/DataCard";
 import { ResultsDisplayProps } from "../../types/types";
 
 function ResultsDisplay(props: ResultsDisplayProps): JSX.Element {

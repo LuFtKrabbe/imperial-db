@@ -1,6 +1,4 @@
-import React from "react";
-
-import styles from "./pagination.module.css";
+import styles from "./Pagination.module.css";
 import { PaginationProps } from "../../types/types";
 import { Link } from "react-router-dom";
 import { createArrToNum } from "../../utils/utils";

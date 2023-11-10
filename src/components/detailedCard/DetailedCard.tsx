@@ -1,4 +1,4 @@
-import styles from "./detailedCard.module.css";
+import styles from "./DetailedCard.module.css";
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";

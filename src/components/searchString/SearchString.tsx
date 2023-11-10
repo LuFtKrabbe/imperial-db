@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SearchStringProps } from "../../types/types";
-import styles from "./searchString.module.css";
+import styles from "./SearchString.module.css";
 
 function SearchString(props: SearchStringProps): JSX.Element {
   const [searchQuery, setSearchQuery] = useState(props.searchQueryProp);

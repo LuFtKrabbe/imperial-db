@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import SearchString from "../searchString/searchString";
-import ResultsDisplay from "../resultsDisplay/resultsDisplay";
-import ErrorButton from "../errorButton/errorButton";
+import SearchString from "../searchString/SearchString";
+import ResultsDisplay from "../resultsDisplay/ResultsDisplay";
+import ErrorButton from "../errorButton/ErrorButton";
 import Pagination from "../pagination/Pagination";
 import { useNavigate, Outlet } from "react-router-dom";
 import { DataPlanet, GetPartPlanetData } from "../../types/types";

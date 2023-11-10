@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import styles from "./errorButton.module.css";
+import styles from "./ErrorButton.module.css";
 
 function ErrorButton(): JSX.Element {
   const [error, setError] = useState(false);
