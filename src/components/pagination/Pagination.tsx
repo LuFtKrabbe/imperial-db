@@ -1,9 +1,13 @@
+import React, { useState } from "react";
+
 import styles from "./pagination.module.css";
 import { PaginationProps } from "../../types/types";
 import { Link } from "react-router-dom";
 import { createArrToNum } from "../../utils/utils";
 
 function Pagination(props: PaginationProps): JSX.Element {
+  const [activePage, setActivePage] = useState(1);
+
   const pagesQuantity =
     props.itemsPerPageProp === "10"
       ? Math.ceil(props.itemsQuantityProp / 10)
@@ -16,10 +20,13 @@ function Pagination(props: PaginationProps): JSX.Element {
         {arr.map((value) => {
           return (
             <Link
-              className={styles.paginationPage}
+              className={value === activePage ? styles.pageActive : styles.page}
               key={value}
               to={`?page=${value}`}
-              onClick={() => props.setPageMethod(value)}
+              onClick={() => {
+                setActivePage(value);
+                props.setPageMethod(activePage);
+              }}
             >
               {value}
             </Link>

@@ -20,7 +20,8 @@
   height: 30px;
 }
 
-.paginationPage {
+.page,
+.pageActive {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,6 +34,10 @@
   margin: 0px 4px;
   color: rgb(182, 182, 182);
   background-color: rgb(29, 27, 26);
+}
+
+.pageActive {
+  background-color: rgb(0, 0, 0);
 }
 
 .paginationQuantities {
