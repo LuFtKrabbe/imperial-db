@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 
 import SearchString from "../searchString/SearchString";
 import ResultsDisplay from "../resultsDisplay/ResultsDisplay";
 import ErrorButton from "../errorButton/ErrorButton";
 import Pagination from "../pagination/Pagination";
 import { useNavigate, Outlet } from "react-router-dom";
-import { DataPlanet, GetPartPlanetData } from "../../types/types";
+import { DataPlanet, GetPartPlanetData, TypeContext } from "../../types/types";
 import { fetchPlanetData, isOdd } from "../../utils/utils";
+
+export const DataManagerContext = createContext<Partial<TypeContext>>({});
 
 function DataManager() {
   const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
-
   const [searchQuery, setSearchQuery] = useState(lastSearchQuery);
   const [itemsQuantity, setItemsQuantity] = useState<number>(0);
-  const [planetData, setPlanetData] = useState<DataPlanet[]>([]);
+  const [planetData, setPlanetData] = useState<DataPlanet[]>();
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState("10");
   const [page, setPage] = useState(1);
@@ -26,7 +27,6 @@ function DataManager() {
 
   const setSearchQueryCb = (searchQuery: string) => {
     setSearchQuery(searchQuery);
-    localStorage.setItem("lastSearchQuery", searchQuery);
     goToFirstPage();
   };
 
@@ -69,12 +69,11 @@ function DataManager() {
 
   return (
     <>
-      <div>
+      <DataManagerContext.Provider
+        value={{ page, planetData, searchQuery, setSearchQueryCb }}
+      >
         <h1>IMPERIAL PLANETARY DATABASE</h1>
-        <SearchString
-          setSearchQueryMethod={setSearchQueryCb}
-          searchQueryProp={searchQuery}
-        />
+        <SearchString />
         <ErrorButton />
         <Pagination
           setPageMethod={setPageCb}
@@ -83,12 +82,8 @@ function DataManager() {
           itemsPerPageProp={itemsPerPage}
           itemsQuantityProp={itemsQuantity}
         />
-        {isDataLoading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <ResultsDisplay planetDataProp={planetData} pageProp={page} />
-        )}
-      </div>
+        {isDataLoading ? <h1>Loading...</h1> : <ResultsDisplay />}
+      </DataManagerContext.Provider>
       <Outlet />
     </>
   );

@@ -1,19 +1,21 @@
+import { useContext } from "react";
+
 import styles from "./ResultsDisplay.module.css";
 import DataCard from "../dataCard/DataCard";
-import { ResultsDisplayProps } from "../../types/types";
+import { DataManagerContext } from "../dataManager/DataManager";
 
-function ResultsDisplay(props: ResultsDisplayProps): JSX.Element {
-  const planetData = props.planetDataProp;
+function ResultsDisplay(): JSX.Element {
+  const { page, planetData } = useContext(DataManagerContext);
 
   return (
     <div className={styles.displayContainer}>
-      {planetData.length ? (
+      {planetData && planetData.length ? (
         planetData.map((planet, i) => (
           <DataCard
             key={planet.name}
             itemProp={planet}
             itemNumProp={i + 1}
-            pageProp={props.pageProp}
+            pageProp={page || 1}
           />
         ))
       ) : (

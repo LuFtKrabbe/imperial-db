@@ -34,11 +34,6 @@ export type DataCardProps = {
   pageProp: number;
 };
 
-export type ResultsDisplayProps = {
-  planetDataProp: Array<DataPlanet>;
-  pageProp: number;
-};
-
 export type PaginationProps = {
   setPageMethod: (page: number) => void;
   setItemsPerPageMethod: (itemsPerPage: string) => void;
@@ -47,7 +42,9 @@ export type PaginationProps = {
   itemsQuantityProp: number;
 };
 
-export type SearchStringProps = {
-  setSearchQueryMethod: (searchQuery: string) => void;
-  searchQueryProp: string;
+export type TypeContext = {
+  page: number;
+  planetData: DataPlanet[];
+  searchQuery: string;
+  setSearchQueryCb: (searchQuery: string) => void;
 };
