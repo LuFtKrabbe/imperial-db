@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<DataManager />}>
           <Route path="card/*" element={<DetailedCard />} />
         </Route>
-        <Route path="*" element={<h1>Not found</h1>} />
+        <Route path="*" element={<h1>404: Page not found</h1>} />
       </Routes>
     </ErrorBoundary>
   );
