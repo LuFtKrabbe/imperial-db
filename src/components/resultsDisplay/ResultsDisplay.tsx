@@ -8,7 +8,7 @@ function ResultsDisplay(): JSX.Element {
   const { page, planetData } = useContext(DataManagerContext);
 
   return (
-    <div className={styles.displayContainer}>
+    <div className={styles.displayContainer} role={"cardList"}>
       {planetData && planetData.length ? (
         planetData.map((planet, i) => (
           <DataCard
