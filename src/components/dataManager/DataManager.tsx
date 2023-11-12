@@ -62,7 +62,6 @@ function DataManager() {
       })
       .catch(() => {
         console.log("Can't load planets data from API");
-        alert("Data couldn't be loaded. Check the console log!");
       })
       .finally(() => setIsDataLoading(false));
   }, [searchQuery, page, itemsPerPage]);
