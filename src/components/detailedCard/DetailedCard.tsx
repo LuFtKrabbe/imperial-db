@@ -19,7 +19,6 @@ function DetailedCard(): JSX.Element {
       })
       .catch(() => {
         console.log("Can't load data for DetailedCard");
-        alert("Data couldn't be loaded. Check the console log!");
       })
       .finally(() => setIsDataLoading(false));
   }, [searchParams]);
@@ -28,12 +27,13 @@ function DetailedCard(): JSX.Element {
     <>
       <div className={styles.detailedCard}>
         <div
+          role="detailedCardCurtain"
           className={styles.curtain}
           onClick={() => {
             navigate(-1);
           }}
         ></div>
-        <div className={styles.panel}>
+        <div className={styles.panel} role="detailedCardPanel">
           {isDataLoading ? (
             <h1>Loading...</h1>
           ) : (
