@@ -7,4 +7,9 @@ export default {
   moduleNameMapper: {
     "\\.(css)$": "identity-obj-proxy",
   },
+  setupFiles: ["./jest.pollyfills.ts"],
+  setupFilesAfterEnv: ["./jest.setup.ts"],
+  testEnvironmentOptions: {
+    customExportConditions: [""],
+  },
 };
