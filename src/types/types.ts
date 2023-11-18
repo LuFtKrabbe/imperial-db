@@ -1,0 +1,50 @@
+export type PlanetResponse = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PlanetParams[];
+};
+
+export type PlanetParams = {
+  climate: string;
+  created: string;
+  diameter: string;
+  edited: string;
+  films: Array<string>;
+  gravity: string;
+  name: string;
+  orbital_period: string;
+  population: string;
+  residents: Array<string>;
+  rotation_period: string;
+  surface_water: string;
+  terrain: string;
+  url: string;
+};
+
+export type PartPlanetListFunc = (
+  part: "firstHalf" | "secondHalf",
+  data: PlanetParams[],
+) => PlanetParams[];
+
+export type CardProps = {
+  key: string;
+  itemProp: PlanetParams;
+  itemNumProp: number;
+  pageProp: number;
+};
+
+export type PaginationProps = {
+  setPageMethod: (page: number) => void;
+  setItemsPerPageMethod: (itemsPerPage: string) => void;
+  pageProp: number;
+  itemsPerPageProp: string;
+  itemsQuantityProp: number;
+};
+
+export type ContextProps = {
+  page: number;
+  planetList: PlanetParams[];
+  searchQuery: string;
+  setSearchQueryCb: (searchQuery: string) => void;
+};
