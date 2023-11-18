@@ -12,11 +12,18 @@ import {
 } from "../../types/types";
 import { fetchPlanetList, isOdd } from "../../utils/utils";
 
+import type { RootState } from "../../app/store";
+import { useAppSelector } from "../../app/hooks";
+
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 
 function DataManager() {
   const DEFAULT_ITEMS_QUANTITY = 0;
   const DEFAULT_ITEMS_PER_PAGE = "10";
+
+  const itemsPerPage = useAppSelector(
+    (state: RootState) => state.pagination.value,
+  );
 
   const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
   const [searchQuery, setSearchQuery] = useState(lastSearchQuery);
@@ -25,7 +32,6 @@ function DataManager() {
   );
   const [planetList, setPlanetList] = useState<PlanetParams[]>();
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
@@ -36,11 +42,6 @@ function DataManager() {
 
   const setSearchQueryCb = (searchQuery: string) => {
     setSearchQuery(searchQuery);
-    goToFirstPage();
-  };
-
-  const setItemsPerPageCb = (itemsPerPage: string) => {
-    setItemsPerPage(itemsPerPage);
     goToFirstPage();
   };
 
@@ -87,7 +88,6 @@ function DataManager() {
         <ErrorButton />
         <Pagination
           setPageMethod={setPageCb}
-          setItemsPerPageMethod={setItemsPerPageCb}
           pageProp={page}
           itemsPerPageProp={itemsPerPage}
           itemsQuantityProp={itemsQuantity}
