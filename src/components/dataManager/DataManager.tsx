@@ -13,17 +13,20 @@ import {
 import { fetchPlanetList, isOdd } from "../../utils/utils";
 
 import type { RootState } from "../../app/store";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { setPage } from "../pagination/paginationSlice";
 
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 
 function DataManager() {
   const DEFAULT_ITEMS_QUANTITY = 0;
-  const DEFAULT_ITEMS_PER_PAGE = "10";
+  const DEFAULT_ITEMS_PER_PAGE = 10;
 
+  const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
-    (state: RootState) => state.pagination.value,
+    (state: RootState) => state.pagination.itemsPerPage,
   );
+  const dispatch = useAppDispatch();
 
   const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
   const [searchQuery, setSearchQuery] = useState(lastSearchQuery);
@@ -32,11 +35,10 @@ function DataManager() {
   );
   const [planetList, setPlanetList] = useState<PlanetParams[]>();
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
   const goToFirstPage = () => {
-    setPage(1);
+    dispatch(setPage(1));
     navigate(`?page=1`);
   };
 
@@ -44,8 +46,6 @@ function DataManager() {
     setSearchQuery(searchQuery);
     goToFirstPage();
   };
-
-  const setPageCb = (page: number) => setPage(page);
 
   const PartPlanetListFunc: PartPlanetListFunc = (part, data) => {
     const totalItems = 10;
@@ -55,12 +55,11 @@ function DataManager() {
   };
 
   useEffect(() => {
-    const pageForBackEndQuery =
+    const pageServer =
       itemsPerPage === DEFAULT_ITEMS_PER_PAGE ? page : Math.ceil(page / 2);
-    const searchPart = searchQuery.trim().toLowerCase();
-    const query = searchPart
-      ? `?search=${searchPart}&page=${pageForBackEndQuery}`
-      : `?page=${pageForBackEndQuery}`;
+    const query = `?search=${searchQuery
+      .trim()
+      .toLowerCase()}&page=${pageServer}`;
     setIsDataLoading(true);
     fetchPlanetList(`${query}`)
       .then((data) => {
@@ -81,17 +80,12 @@ function DataManager() {
   return (
     <>
       <DataManagerContext.Provider
-        value={{ page, planetList, searchQuery, setSearchQueryCb }}
+        value={{ planetList, searchQuery, setSearchQueryCb }}
       >
         <h1>IMPERIAL PLANETARY DATABASE</h1>
         <SearchString />
         <ErrorButton />
-        <Pagination
-          setPageMethod={setPageCb}
-          pageProp={page}
-          itemsPerPageProp={itemsPerPage}
-          itemsQuantityProp={itemsQuantity}
-        />
+        <Pagination itemsQuantityProp={itemsQuantity} />
         {isDataLoading ? <h1>Loading...</h1> : <CardList />}
       </DataManagerContext.Provider>
       <Outlet />

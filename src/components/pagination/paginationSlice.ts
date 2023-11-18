@@ -1,26 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
-export type CounterState = {
-  value: string;
+export type PaginationState = {
+  page: number;
+  itemsPerPage: 5 | 10;
 };
 
-const initialState: CounterState = {
-  value: "10",
+const initialState: PaginationState = {
+  page: 1,
+  itemsPerPage: 10,
 };
 
 export const paginationSlice = createSlice({
   name: "pagination",
   initialState,
   reducers: {
-    switchTo5: (state) => {
-      state.value = "5";
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
     },
-    switchTo10: (state) => {
-      state.value = "10";
+    setItemsPerPage: (state, action: PayloadAction<5 | 10>) => {
+      state.itemsPerPage = action.payload;
     },
   },
 });
 
-export const { switchTo5, switchTo10 } = paginationSlice.actions;
+export const { setPage, setItemsPerPage } = paginationSlice.actions;
 
 export default paginationSlice.reducer;

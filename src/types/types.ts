@@ -35,14 +35,10 @@ export type CardProps = {
 };
 
 export type PaginationProps = {
-  setPageMethod: (page: number) => void;
-  pageProp: number;
-  itemsPerPageProp: string;
   itemsQuantityProp: number;
 };
 
 export type ContextProps = {
-  page: number;
   planetList: PlanetParams[];
   searchQuery: string;
   setSearchQueryCb: (searchQuery: string) => void;

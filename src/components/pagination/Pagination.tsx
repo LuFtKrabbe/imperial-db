@@ -5,34 +5,30 @@ import { createArrToNum } from "../../utils/utils";
 
 import type { RootState } from "../../app/store";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { switchTo5, switchTo10 } from "./paginationSlice";
+import { setPage, setItemsPerPage } from "./paginationSlice";
 
 function Pagination(props: PaginationProps): JSX.Element {
+  const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
-    (state: RootState) => state.pagination.value,
+    (state: RootState) => state.pagination.itemsPerPage,
   );
   const dispatch = useAppDispatch();
 
-  const pagesQuantity =
-    itemsPerPage === "10"
-      ? Math.ceil(props.itemsQuantityProp / 10)
-      : Math.ceil(props.itemsQuantityProp / 5);
+  const pagesQuantity = Math.ceil(props.itemsQuantityProp / itemsPerPage);
   const arr = createArrToNum(pagesQuantity);
 
   return (
     <div className={styles.pagination}>
       <nav className={styles.paginationPages}>
-        {arr.map((value) => {
+        {arr.map((pageNum) => {
           return (
             <Link
-              className={
-                value === props.pageProp ? styles.pageActive : styles.page
-              }
-              key={value}
-              to={`?page=${value}`}
-              onClick={() => props.setPageMethod(value)}
+              className={pageNum === page ? styles.pageActive : styles.page}
+              key={pageNum}
+              to={`?page=${pageNum}`}
+              onClick={() => dispatch(setPage(pageNum))}
             >
-              {value}
+              {pageNum}
             </Link>
           );
         })}
@@ -40,13 +36,13 @@ function Pagination(props: PaginationProps): JSX.Element {
       <div className={styles.paginationQuantities}>
         <button
           className={styles.paginationQuantity}
-          onClick={() => dispatch(switchTo5())}
+          onClick={() => dispatch(setItemsPerPage(5))}
         >
           5
         </button>
         <button
           className={styles.paginationQuantity}
-          onClick={() => dispatch(switchTo10())}
+          onClick={() => dispatch(setItemsPerPage(10))}
         >
           10
         </button>
