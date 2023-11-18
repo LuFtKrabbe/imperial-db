@@ -13,25 +13,21 @@ import SearchString from "../searchString/SearchString";
 import CardList from "../cardList/CardList";
 import ErrorButton from "../errorButton/ErrorButton";
 import Pagination from "../pagination/Pagination";
-
-import { useAppSelector } from "../../app/hooks";
+import { setItemsQuantity } from "../pagination/paginationSlice";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 
 function DataManager() {
-  const DEFAULT_ITEMS_QUANTITY = 0;
-  const DEFAULT_ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE_FROM_SERVER = 10;
 
+  const dispatch = useAppDispatch();
   const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
     (state: RootState) => state.pagination.itemsPerPage,
   );
   const searchQuery = useAppSelector(
     (state: RootState) => state.search.searchQuery,
-  );
-
-  const [itemsQuantity, setItemsQuantity] = useState<number>(
-    DEFAULT_ITEMS_QUANTITY,
   );
   const [planetList, setPlanetList] = useState<PlanetParams[]>();
   const [isDataLoading, setIsDataLoading] = useState(false);
@@ -44,27 +40,24 @@ function DataManager() {
   };
 
   useEffect(() => {
-    const pageServer =
-      itemsPerPage === DEFAULT_ITEMS_PER_PAGE ? page : Math.ceil(page / 2);
-    const query = `?search=${searchQuery
-      .trim()
-      .toLowerCase()}&page=${pageServer}`;
+    const isItemsEqual = Boolean(itemsPerPage === ITEMS_PER_PAGE_FROM_SERVER);
+    const pageServer = isItemsEqual ? page : Math.ceil(page / 2);
+    const searchPart = `?search=${searchQuery.trim().toLowerCase()}`;
+    const query = `${searchPart}&page=${pageServer}`;
     setIsDataLoading(true);
     fetchPlanetList(`${query}`)
       .then((data) => {
         const planetList = data.results;
         const part = isOdd(page) ? "firstHalf" : "secondHalf";
         const partPlanetList = PartPlanetListFunc(part, planetList);
-        setPlanetList(
-          itemsPerPage === DEFAULT_ITEMS_PER_PAGE ? planetList : partPlanetList,
-        );
-        setItemsQuantity(data.count);
+        setPlanetList(isItemsEqual ? planetList : partPlanetList);
+        dispatch(setItemsQuantity(data.count));
       })
       .catch(() => {
         console.log("Can't load planets data from API");
       })
       .finally(() => setIsDataLoading(false));
-  }, [searchQuery, page, itemsPerPage]);
+  }, [searchQuery, page, itemsPerPage, dispatch]);
 
   return (
     <>
@@ -72,7 +65,7 @@ function DataManager() {
         <h1>IMPERIAL PLANETARY DATABASE</h1>
         <SearchString />
         <ErrorButton />
-        <Pagination itemsQuantityProp={itemsQuantity} />
+        <Pagination />
         {isDataLoading ? <h1>Loading...</h1> : <CardList />}
       </DataManagerContext.Provider>
       <Outlet />

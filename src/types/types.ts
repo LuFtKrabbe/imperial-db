@@ -34,10 +34,6 @@ export type CardProps = {
   pageProp: number;
 };
 
-export type PaginationProps = {
-  itemsQuantityProp: number;
-};
-
 export type ContextProps = {
   planetList: PlanetParams[];
   searchQuery: string;

@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 
-import { PaginationProps } from "../../types/types";
 import { createArrToNum } from "../../utils/utils";
 
 import type { RootState } from "../../app/store";
@@ -9,21 +8,24 @@ import { setPage, setItemsPerPage } from "./paginationSlice";
 
 import styles from "./Pagination.module.css";
 
-function Pagination(props: PaginationProps): JSX.Element {
+function Pagination(): JSX.Element {
   const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
     (state: RootState) => state.pagination.itemsPerPage,
   );
+  const itemsQuantity = useAppSelector(
+    (state: RootState) => state.pagination.itemsQuantity,
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const pagesQuantity = Math.ceil(props.itemsQuantityProp / itemsPerPage);
-  const arr = createArrToNum(pagesQuantity);
+  const pagesQuantity = Math.ceil(itemsQuantity / itemsPerPage);
+  const arrPages = createArrToNum(pagesQuantity);
 
   return (
     <div className={styles.pagination}>
       <nav className={styles.paginationPages}>
-        {arr.map((pageNum) => {
+        {arrPages.map((pageNum) => {
           return (
             <Link
               className={pageNum === page ? styles.pageActive : styles.page}
