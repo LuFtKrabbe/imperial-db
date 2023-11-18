@@ -1,6 +1,6 @@
-import { DataPlanetResponse } from "../types/types";
+import { PlanetResponse } from "../types/types";
 
-export const mockDataPlanetResponse: DataPlanetResponse = {
+export const mockPlanetResponse: PlanetResponse = {
   count: 60,
   next: "https://swapi.dev/api/planets/?page=2",
   previous: null,

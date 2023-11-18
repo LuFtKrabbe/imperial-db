@@ -1,8 +1,8 @@
-import styles from "./DataCard.module.css";
-import { DataCardProps } from "../../types/types";
+import styles from "./Card.module.css";
+import { CardProps } from "../../types/types";
 import { useNavigate } from "react-router";
 
-function DataCard(props: DataCardProps): JSX.Element {
+function Card(props: CardProps): JSX.Element {
   const { name, population, climate, terrain, gravity, url } = props.itemProp;
   const { pageProp, itemNumProp } = props;
   const id = url.split("/").slice(-2)[0];
@@ -26,4 +26,4 @@ function DataCard(props: DataCardProps): JSX.Element {
   );
 }
 
-export default DataCard;
+export default Card;

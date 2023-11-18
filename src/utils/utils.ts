@@ -1,14 +1,14 @@
-import { DataPlanet, DataPlanetResponse } from "../types/types";
+import { PlanetParams, PlanetResponse } from "../types/types";
 
 //TODO: Merge these fetch functions
 
-export function fetchPlanetData(query: string): Promise<DataPlanetResponse> {
+export function fetchPlanetList(query: string): Promise<PlanetResponse> {
   return fetch(`https://swapi.dev/api/planets/${query}`).then(
     (response: Response) => response.json(),
   );
 }
 
-export function fetchPlanet(query: string): Promise<DataPlanet> {
+export function fetchPlanet(query: string): Promise<PlanetParams> {
   return fetch(`https://swapi.dev/api/planets/${query}`).then(
     (response: Response) => response.json(),
   );

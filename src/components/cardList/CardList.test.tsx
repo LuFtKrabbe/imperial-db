@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import user from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
-import ResultsDisplay from "./ResultsDisplay";
+import CardList from "./CardList";
 import App from "../../App";
 
 describe("Card list tests", () => {
@@ -29,7 +29,7 @@ describe("Card list tests", () => {
   test("Message for nothing rendered data", async () => {
     render(
       <Router>
-        <ResultsDisplay />
+        <CardList />
       </Router>,
     );
 

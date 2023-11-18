@@ -1,17 +1,17 @@
 import { useContext } from "react";
 
-import styles from "./ResultsDisplay.module.css";
-import DataCard from "../dataCard/DataCard";
+import styles from "./CardList.module.css";
+import Card from "../card/Card";
 import { DataManagerContext } from "../dataManager/DataManager";
 
-function ResultsDisplay(): JSX.Element {
-  const { page, planetData } = useContext(DataManagerContext);
+function CardList(): JSX.Element {
+  const { page, planetList } = useContext(DataManagerContext);
 
   return (
     <div className={styles.displayContainer} role={"cardList"}>
-      {planetData && planetData.length ? (
-        planetData.map((planet, i) => (
-          <DataCard
+      {planetList && planetList.length ? (
+        planetList.map((planet, i) => (
+          <Card
             key={planet.name}
             itemProp={planet}
             itemNumProp={i + 1}
@@ -25,4 +25,4 @@ function ResultsDisplay(): JSX.Element {
   );
 }
 
-export default ResultsDisplay;
+export default CardList;

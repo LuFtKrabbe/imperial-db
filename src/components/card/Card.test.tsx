@@ -4,18 +4,18 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "@testing-library/jest-dom";
 
 import App from "../../App";
-import DataCard from "./DataCard";
+import Card from "./Card";
 import {
   mockPlanetBespin,
   mockItemNumber,
   mockPage,
 } from "../../mocks/mockPlanetBespin";
 
-describe("DataCard tests", () => {
+describe("Card tests", () => {
   test("Card component renders the relevant data", async () => {
     render(
       <Router>
-        <DataCard
+        <Card
           key={mockPlanetBespin.name}
           itemProp={mockPlanetBespin}
           itemNumProp={mockItemNumber}

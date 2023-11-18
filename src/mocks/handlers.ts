@@ -1,10 +1,10 @@
 import { http, HttpResponse, delay } from "msw";
-import { mockDataPlanetResponse } from "./mockDataPlanetResponse";
+import { mockPlanetResponse } from "./mockPlanetResponse";
 import { mockPlanetBespin } from "./mockPlanetBespin";
 
 export const handlers = [
   http.get("https://swapi.dev/api/planets/", () => {
-    return HttpResponse.json(mockDataPlanetResponse);
+    return HttpResponse.json(mockPlanetResponse);
   }),
   http.get("https://swapi.dev/api/planets/6", async () => {
     await delay(700);

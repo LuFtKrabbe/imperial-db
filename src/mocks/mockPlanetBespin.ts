@@ -1,6 +1,6 @@
-import { DataPlanet } from "../types/types";
+import { PlanetParams } from "../types/types";
 
-export const mockPlanetBespin: DataPlanet = {
+export const mockPlanetBespin: PlanetParams = {
   name: "Bespin",
   rotation_period: "12",
   orbital_period: "5110",

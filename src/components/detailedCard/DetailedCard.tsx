@@ -3,13 +3,13 @@ import styles from "./DetailedCard.module.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import { DataPlanet } from "../../types/types";
+import { PlanetParams } from "../../types/types";
 import { fetchPlanet } from "../../utils/utils";
 
 function DetailedCard(): JSX.Element {
   const [searchParams] = useSearchParams();
   const [isDataLoading, setIsDataLoading] = useState(true);
-  const [resultData, setResultData] = useState<DataPlanet>();
+  const [resultData, setResultData] = useState<PlanetParams>();
   const navigate = useNavigate();
 
   useEffect(() => {

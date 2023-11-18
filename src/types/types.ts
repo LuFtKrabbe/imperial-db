@@ -1,11 +1,11 @@
-export type DataPlanetResponse = {
+export type PlanetResponse = {
   count: number;
   next: string | null;
   previous: string | null;
-  results: DataPlanet[];
+  results: PlanetParams[];
 };
 
-export type DataPlanet = {
+export type PlanetParams = {
   climate: string;
   created: string;
   diameter: string;
@@ -22,14 +22,14 @@ export type DataPlanet = {
   url: string;
 };
 
-export type GetPartPlanetData = (
+export type PartPlanetListFunc = (
   part: "firstHalf" | "secondHalf",
-  data: DataPlanet[],
-) => DataPlanet[];
+  data: PlanetParams[],
+) => PlanetParams[];
 
-export type DataCardProps = {
+export type CardProps = {
   key: string;
-  itemProp: DataPlanet;
+  itemProp: PlanetParams;
   itemNumProp: number;
   pageProp: number;
 };
@@ -42,9 +42,9 @@ export type PaginationProps = {
   itemsQuantityProp: number;
 };
 
-export type TypeContext = {
+export type ContextProps = {
   page: number;
-  planetData: DataPlanet[];
+  planetList: PlanetParams[];
   searchQuery: string;
   setSearchQueryCb: (searchQuery: string) => void;
 };
