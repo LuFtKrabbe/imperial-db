@@ -23,5 +23,5 @@ export function createArrToNum(number: number) {
 }
 
 export function isOdd(number: number): boolean {
-  return number % 2 ? true : false;
+  return Boolean(number % 2);
 }

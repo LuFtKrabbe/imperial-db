@@ -6,6 +6,8 @@ import "@testing-library/jest-dom";
 import App from "../../App";
 
 describe("Error button tests", () => {
+  const MORE_THAN_ERROR_APPEARANCE_DELAY = 1500;
+
   test("Fallback UI renders when error occurs", async () => {
     render(
       <Router>
@@ -30,7 +32,7 @@ describe("Error button tests", () => {
         });
         expect(errorMessage).toBeInTheDocument();
       },
-      { timeout: 1500 },
+      { timeout: MORE_THAN_ERROR_APPEARANCE_DELAY },
     );
   });
 });

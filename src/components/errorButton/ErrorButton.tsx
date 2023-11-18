@@ -3,6 +3,8 @@ import { useState } from "react";
 import styles from "./ErrorButton.module.css";
 
 function ErrorButton(): JSX.Element {
+  const ERROR_APPEARANCE_DELAY = 1200;
+
   const [error, setError] = useState(false);
   const [message, setMessage] = useState(
     "GET DATA TO THE OFFICER CODE CYLINDER",
@@ -12,7 +14,7 @@ function ErrorButton(): JSX.Element {
     setMessage("VERIFYING YOUR IDENTITY...");
     setTimeout(() => {
       setError(true);
-    }, 1200);
+    }, ERROR_APPEARANCE_DELAY);
   };
 
   if (error) {

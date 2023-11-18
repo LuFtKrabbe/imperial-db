@@ -15,12 +15,17 @@ import { fetchPlanetList, isOdd } from "../../utils/utils";
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 
 function DataManager() {
+  const DEFAULT_ITEMS_QUANTITY = 0;
+  const DEFAULT_ITEMS_PER_PAGE = "10";
+
   const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
   const [searchQuery, setSearchQuery] = useState(lastSearchQuery);
-  const [itemsQuantity, setItemsQuantity] = useState<number>(0);
+  const [itemsQuantity, setItemsQuantity] = useState<number>(
+    DEFAULT_ITEMS_QUANTITY,
+  );
   const [planetList, setPlanetList] = useState<PlanetParams[]>();
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [itemsPerPage, setItemsPerPage] = useState("10");
+  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
@@ -50,7 +55,7 @@ function DataManager() {
 
   useEffect(() => {
     const pageForBackEndQuery =
-      itemsPerPage === "10" ? page : Math.ceil(page / 2);
+      itemsPerPage === DEFAULT_ITEMS_PER_PAGE ? page : Math.ceil(page / 2);
     const searchPart = searchQuery.trim().toLowerCase();
     const query = searchPart
       ? `?search=${searchPart}&page=${pageForBackEndQuery}`
@@ -61,7 +66,9 @@ function DataManager() {
         const planetList = data.results;
         const part = isOdd(page) ? "firstHalf" : "secondHalf";
         const partPlanetList = PartPlanetListFunc(part, planetList);
-        setPlanetList(itemsPerPage === "10" ? planetList : partPlanetList);
+        setPlanetList(
+          itemsPerPage === DEFAULT_ITEMS_PER_PAGE ? planetList : partPlanetList,
+        );
         setItemsQuantity(data.count);
       })
       .catch(() => {
