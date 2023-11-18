@@ -1,11 +1,13 @@
-import styles from "./Pagination.module.css";
+import { Link, useNavigate } from "react-router-dom";
+
 import { PaginationProps } from "../../types/types";
-import { Link } from "react-router-dom";
 import { createArrToNum } from "../../utils/utils";
 
 import type { RootState } from "../../app/store";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setPage, setItemsPerPage } from "./paginationSlice";
+
+import styles from "./Pagination.module.css";
 
 function Pagination(props: PaginationProps): JSX.Element {
   const page = useAppSelector((state: RootState) => state.pagination.page);
@@ -13,6 +15,7 @@ function Pagination(props: PaginationProps): JSX.Element {
     (state: RootState) => state.pagination.itemsPerPage,
   );
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const pagesQuantity = Math.ceil(props.itemsQuantityProp / itemsPerPage);
   const arr = createArrToNum(pagesQuantity);
@@ -26,7 +29,9 @@ function Pagination(props: PaginationProps): JSX.Element {
               className={pageNum === page ? styles.pageActive : styles.page}
               key={pageNum}
               to={`?page=${pageNum}`}
-              onClick={() => dispatch(setPage(pageNum))}
+              onClick={() => {
+                dispatch(setPage(pageNum));
+              }}
             >
               {pageNum}
             </Link>
@@ -36,13 +41,21 @@ function Pagination(props: PaginationProps): JSX.Element {
       <div className={styles.paginationQuantities}>
         <button
           className={styles.paginationQuantity}
-          onClick={() => dispatch(setItemsPerPage(5))}
+          onClick={() => {
+            navigate(`?page=1`);
+            dispatch(setPage(1));
+            dispatch(setItemsPerPage(5));
+          }}
         >
           5
         </button>
         <button
           className={styles.paginationQuantity}
-          onClick={() => dispatch(setItemsPerPage(10))}
+          onClick={() => {
+            navigate(`?page=1`);
+            dispatch(setPage(1));
+            dispatch(setItemsPerPage(10));
+          }}
         >
           10
         </button>

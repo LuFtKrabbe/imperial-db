@@ -1,20 +1,20 @@
 import { useEffect, useState, createContext } from "react";
+import { Outlet } from "react-router-dom";
 
-import SearchString from "../searchString/SearchString";
-import CardList from "../cardList/CardList";
-import ErrorButton from "../errorButton/ErrorButton";
-import Pagination from "../pagination/Pagination";
-import { useNavigate, Outlet } from "react-router-dom";
 import {
   PlanetParams,
   PartPlanetListFunc,
   ContextProps,
 } from "../../types/types";
+import type { RootState } from "../../app/store";
 import { fetchPlanetList, isOdd } from "../../utils/utils";
 
-import type { RootState } from "../../app/store";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { setPage } from "../pagination/paginationSlice";
+import SearchString from "../searchString/SearchString";
+import CardList from "../cardList/CardList";
+import ErrorButton from "../errorButton/ErrorButton";
+import Pagination from "../pagination/Pagination";
+
+import { useAppSelector } from "../../app/hooks";
 
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 
@@ -26,26 +26,15 @@ function DataManager() {
   const itemsPerPage = useAppSelector(
     (state: RootState) => state.pagination.itemsPerPage,
   );
-  const dispatch = useAppDispatch();
+  const searchQuery = useAppSelector(
+    (state: RootState) => state.search.searchQuery,
+  );
 
-  const lastSearchQuery = localStorage.getItem("lastSearchQuery") || "";
-  const [searchQuery, setSearchQuery] = useState(lastSearchQuery);
   const [itemsQuantity, setItemsQuantity] = useState<number>(
     DEFAULT_ITEMS_QUANTITY,
   );
   const [planetList, setPlanetList] = useState<PlanetParams[]>();
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const goToFirstPage = () => {
-    dispatch(setPage(1));
-    navigate(`?page=1`);
-  };
-
-  const setSearchQueryCb = (searchQuery: string) => {
-    setSearchQuery(searchQuery);
-    goToFirstPage();
-  };
 
   const PartPlanetListFunc: PartPlanetListFunc = (part, data) => {
     const totalItems = 10;
@@ -79,9 +68,7 @@ function DataManager() {
 
   return (
     <>
-      <DataManagerContext.Provider
-        value={{ planetList, searchQuery, setSearchQueryCb }}
-      >
+      <DataManagerContext.Provider value={{ planetList }}>
         <h1>IMPERIAL PLANETARY DATABASE</h1>
         <SearchString />
         <ErrorButton />

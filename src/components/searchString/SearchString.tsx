@@ -1,40 +1,43 @@
-import React, { useState, useContext } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import type { RootState } from "../../app/store";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { setSearchQuery } from "./searchSlice";
+import { setPage } from "../pagination/paginationSlice";
+
 import styles from "./SearchString.module.css";
-import { DataManagerContext } from "../dataManager/DataManager";
 
 function SearchString(): JSX.Element {
-  const { searchQuery, setSearchQueryCb } = useContext(DataManagerContext);
+  const searchQuery = useAppSelector(
+    (state: RootState) => state.search.searchQuery,
+  );
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState(searchQuery);
-
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setQuery(event.target.value);
-    event.preventDefault();
-  };
-
-  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    if (setSearchQueryCb && query !== undefined) {
-      setSearchQueryCb(query);
-      localStorage.setItem("lastSearchQuery", query);
-    }
-  };
 
   return (
     <>
-      <form onSubmit={onFormSubmit}>
-        <div className={styles.searchContainer}>
-          <input
-            className={styles.searchInput}
-            onChange={onInputChange}
-            placeholder="Enter the planet name..."
-            value={query}
-            type="text"
-          ></input>
-          <button className={styles.searchButton} type="submit">
-            Search
-          </button>
-        </div>
-      </form>
+      <div className={styles.searchContainer}>
+        <input
+          className={styles.searchInput}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Enter the planet name..."
+          value={query}
+          type="text"
+        ></input>
+        <button
+          className={styles.searchButton}
+          onClick={() => {
+            navigate(`?page=1`);
+            dispatch(setPage(1));
+            dispatch(setSearchQuery(query));
+          }}
+        >
+          Search
+        </button>
+      </div>
     </>
   );
 }
