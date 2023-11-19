@@ -1,27 +1,31 @@
 import styles from "./DetailedCard.module.css";
 
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import { PlanetParams } from "../../types/types";
-import { fetchPlanet } from "../../utils/utils";
+
+import { setLoadingPlanetDetails } from "../../services/loadingFlagsSlice";
+import { useAppDispatch } from "../../app/hooks";
+
+import { useGetPlanetByIdQuery } from "../../services/planet";
+import { useEffect } from "react";
 
 function DetailedCard(): JSX.Element {
   const [searchParams] = useSearchParams();
-  const [isDataLoading, setIsDataLoading] = useState(true);
-  const [resultData, setResultData] = useState<PlanetParams>();
+
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { data, error, isLoading } = useGetPlanetByIdQuery(
+    `${searchParams.get("id")}`,
+  );
 
   useEffect(() => {
-    fetchPlanet(`${searchParams.get("id")}`)
-      .then((data) => {
-        setResultData(data);
-      })
-      .catch(() => {
-        console.log("Can't load data for DetailedCard");
-      })
-      .finally(() => setIsDataLoading(false));
-  }, [searchParams]);
+    dispatch(setLoadingPlanetDetails(isLoading));
+  }, [isLoading, dispatch]);
+
+  if (error) {
+    console.log("Can't load data for DetailedCard");
+  }
 
   return (
     <>
@@ -34,23 +38,25 @@ function DetailedCard(): JSX.Element {
           }}
         ></div>
         <div className={styles.panel} role="detailedCardPanel">
-          {isDataLoading ? (
+          {error ? (
+            <>Can&apos;t load data for DetailedCard</>
+          ) : isLoading ? (
             <h1>Loading...</h1>
-          ) : (
+          ) : data ? (
             <div className={styles.nameListContainer}>
-              <h1 className={styles.name}>{resultData?.name}</h1>
+              <h1 className={styles.name}>{data.name}</h1>
               <div className={styles.list}>
-                <div>Rotation period: {resultData?.rotation_period}</div>
-                <div>Orbital Period: {resultData?.orbital_period}</div>
-                <div>Diameter: {resultData?.diameter}</div>
-                <div>Climate: {resultData?.climate}</div>
-                <div>Gravity: {resultData?.gravity}</div>
-                <div>Terrain: {resultData?.terrain}</div>
-                <div>Surface water: {resultData?.surface_water}</div>
-                <div>Population: {resultData?.population}</div>
+                <div>Rotation period: {data.rotation_period}</div>
+                <div>Orbital Period: {data.orbital_period}</div>
+                <div>Diameter: {data.diameter}</div>
+                <div>Climate: {data.climate}</div>
+                <div>Gravity: {data.gravity}</div>
+                <div>Terrain: {data.terrain}</div>
+                <div>Surface water: {data.surface_water}</div>
+                <div>Population: {data.population}</div>
               </div>
             </div>
-          )}
+          ) : null}
           <button
             className={styles.closeButton}
             onClick={() => {
