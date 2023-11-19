@@ -1,0 +1,74 @@
+.detailedCard {
+  position: fixed;
+  display: flex;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(42, 42, 42);
+  width: 20%;
+  min-width: 260px;
+}
+
+.nameListContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.name {
+  border-bottom: 2px solid #471e1e;
+  margin: 0 0 20px 0;
+  padding: 0 20px 12px 20px;
+}
+
+.list {
+  display: flex;
+  justify-items: flex-start;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 90%;
+  border: 0px solid transparent;
+  border-radius: 6px;
+  padding: 10px;
+  color: rgb(163, 163, 163);
+  background-color: #1d1919;
+}
+
+.list div {
+  display: flex;
+  text-align: left;
+  margin: 3px;
+  width: 100%;
+}
+
+.closeButton {
+  width: 90%;
+  height: 30px;
+  margin: 16px 0 0 0;
+  font-weight: 500;
+  font-family: inherit;
+  border: 0px solid transparent;
+  border-radius: 6px;
+  color: rgb(163, 163, 163);
+  background-color: #471e1e;
+}
+
+.closeButton:hover {
+  background-color: #5a2020;
+  color: rgb(255, 255, 255);
+}
+
+.curtain {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 80%;
+}
