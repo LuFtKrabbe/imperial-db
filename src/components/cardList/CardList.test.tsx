@@ -3,15 +3,21 @@ import { BrowserRouter as Router } from "react-router-dom";
 import user from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
+import { Provider } from "react-redux";
+import { store } from "../../app/store";
+
 import CardList from "./CardList";
 import App from "../../App";
 
 describe("Card list tests", () => {
   test("Component renders the specified number of cards", async () => {
     render(
-      <Router>
-        <App />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+        ,
+      </Provider>,
     );
 
     const cardListInit = await screen.findByRole("cardList");
@@ -28,9 +34,12 @@ describe("Card list tests", () => {
 
   test("Message for nothing rendered data", async () => {
     render(
-      <Router>
-        <CardList />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <CardList />
+        </Router>
+        ,
+      </Provider>,
     );
 
     const cardList = await screen.findByRole("cardList");

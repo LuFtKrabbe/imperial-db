@@ -1,16 +1,23 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import user from "@testing-library/user-event";
+
 import "@testing-library/jest-dom";
+
+import { Provider } from "react-redux";
+import { store } from "../../app/store";
 
 import App from "../../App";
 
 describe("DetailedCard tests", () => {
   test("Loading indicator is displayed while data fetching", async () => {
     render(
-      <Router>
-        <App />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+        ,
+      </Provider>,
     );
 
     const cardBespin = await screen.findByText(/bespin/i);
@@ -22,9 +29,12 @@ describe("DetailedCard tests", () => {
 
   test("Detailed card correctly displays its data", async () => {
     render(
-      <Router>
-        <App />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+        ,
+      </Provider>,
     );
 
     const cardBespinPeriodRot = await screen.findByText(/rotation period: 12/i);
@@ -47,9 +57,12 @@ describe("DetailedCard tests", () => {
 
   test("Clicking on a close button hides the element", async () => {
     render(
-      <Router>
-        <App />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+        ,
+      </Provider>,
     );
 
     const cardCurtain = await screen.findByRole("detailedCardCurtain");

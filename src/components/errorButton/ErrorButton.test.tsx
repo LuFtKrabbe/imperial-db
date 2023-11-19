@@ -3,6 +3,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import user from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
+import { Provider } from "react-redux";
+import { store } from "../../app/store";
+
 import App from "../../App";
 
 describe("Error button tests", () => {
@@ -10,9 +13,12 @@ describe("Error button tests", () => {
 
   test("Fallback UI renders when error occurs", async () => {
     render(
-      <Router>
-        <App />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+        ,
+      </Provider>,
     );
 
     const errorButton = screen.getByRole("button", {

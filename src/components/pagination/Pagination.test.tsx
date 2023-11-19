@@ -3,14 +3,20 @@ import { BrowserRouter as Router } from "react-router-dom";
 import user from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
+import { Provider } from "react-redux";
+import { store } from "../../app/store";
+
 import App from "../../App";
 
 describe("Pagination tests", () => {
   test("Component updates URL query parameter", async () => {
     render(
-      <Router>
-        <App />
-      </Router>,
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+        ,
+      </Provider>,
     );
 
     const goFirstPage = await screen.findByRole("link", { name: /1/i });
