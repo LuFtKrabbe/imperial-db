@@ -24,7 +24,7 @@ function DetailedCard(): JSX.Element {
   }, [isLoading, dispatch]);
 
   if (error) {
-    console.log("Can't load data for DetailedCard");
+    throw new Error("Can't load data for DetailedCard");
   }
 
   return (
@@ -38,9 +38,7 @@ function DetailedCard(): JSX.Element {
           }}
         ></div>
         <div className={styles.panel} role="detailedCardPanel">
-          {error ? (
-            <>Can&apos;t load data for DetailedCard</>
-          ) : isLoading ? (
+          {isLoading ? (
             <h1>Loading...</h1>
           ) : data ? (
             <div className={styles.nameListContainer}>

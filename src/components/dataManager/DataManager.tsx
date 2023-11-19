@@ -33,11 +33,11 @@ function DataManager() {
     (state: RootState) => state.search.searchQuery,
   );
 
-  const initialQueryParams = `?search=${searchQuery
-    .trim()
-    .toLowerCase()}&page=${page}`;
+  const initSearchPart = `?search=${searchQuery.trim().toLowerCase()}`;
+  const initQueryParams = `${initSearchPart}&page=${page}`;
+
   const [planetList, setPlanetList] = useState<PlanetParams[]>();
-  const [queryParams, setQueryParams] = useState(initialQueryParams);
+  const [queryParams, setQueryParams] = useState(initQueryParams);
 
   const PartPlanetListFunc: PartPlanetListFunc = (part, data) => {
     return part === "firstHalf"
@@ -47,20 +47,26 @@ function DataManager() {
 
   const { data, error, isFetching } = useGetPlanetListQuery(`${queryParams}`);
 
+  if (error) {
+    throw new Error("Can't load data for CardList");
+  }
+
   useEffect(() => {
     const isItemsEqual = Boolean(itemsPerPage === ITEMS_PER_PAGE_FROM_SERVER);
-    const pageServer = isItemsEqual ? page : Math.ceil(page / 2);
+    const serverPage = isItemsEqual ? page : Math.ceil(page / 2);
     const searchPart = `?search=${searchQuery.trim().toLowerCase()}`;
-    const queryParams = `${searchPart}&page=${pageServer}`;
+    const queryParams = `${searchPart}&page=${serverPage}`;
     setQueryParams(queryParams);
 
     const planetList = data?.results || [];
     const part = isOdd(page) ? "firstHalf" : "secondHalf";
     const partPlanetList = PartPlanetListFunc(part, planetList);
+
     setPlanetList(isItemsEqual ? planetList : partPlanetList);
+
     dispatch(setItemsQuantity(data?.count || 0));
     dispatch(setLoadingPlanetList(isFetching));
-  }, [data, searchQuery, page, itemsPerPage, isFetching, dispatch]);
+  }, [isFetching, data, searchQuery, page, itemsPerPage, dispatch]);
 
   return (
     <>
@@ -69,13 +75,7 @@ function DataManager() {
         <SearchString />
         <ErrorButton />
         <Pagination />
-        {error ? (
-          <h1>Can&apos;t load data</h1>
-        ) : isFetching ? (
-          <h1>Loading...</h1>
-        ) : data ? (
-          <CardList />
-        ) : null}
+        {isFetching ? <h1>Loading...</h1> : <CardList />}
       </DataManagerContext.Provider>
       <Outlet />
     </>
