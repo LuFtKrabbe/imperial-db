@@ -1,15 +1,26 @@
-"use client";
+import Head from "next/head";
+import favicon from "../public/imperial.svg";
+
+import DataManager from "../src/components/dataManager/DataManager";
+import ErrorBoundary from "../src/components/ErrorBoundary";
 
 import { store } from "../src/app/store";
 import { Provider } from "react-redux";
-import dynamic from "next/dynamic";
 
-const App = dynamic(() => import("../src/App"), { ssr: false });
-
-export default function Page() {
+function Page(): JSX.Element {
   return (
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <>
+      <Head>
+        <title>Imperial DB</title>
+        <link rel="icon" type="image/svg+xml" href={favicon.src} />
+      </Head>
+      <Provider store={store}>
+        <ErrorBoundary>
+          <DataManager />
+        </ErrorBoundary>
+      </Provider>
+    </>
   );
 }
+
+export default Page;
