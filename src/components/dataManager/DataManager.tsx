@@ -1,5 +1,4 @@
 import { useEffect, useState, createContext } from "react";
-import { Outlet } from "react-router-dom";
 
 import {
   PlanetParams,
@@ -77,7 +76,6 @@ function DataManager() {
         <Pagination />
         {isFetching ? <h1>Loading...</h1> : <CardList />}
       </DataManagerContext.Provider>
-      <Outlet />
     </>
   );
 }

@@ -1,5 +1,3 @@
-import { Link, useNavigate } from "react-router-dom";
-
 import { createArrToNum } from "../../utils/utils";
 
 import type { RootState } from "../../app/store";
@@ -9,7 +7,7 @@ import { setPage, setItemsPerPage } from "./paginationSlice";
 import styles from "./Pagination.module.css";
 
 function Pagination(): JSX.Element {
-  const page = useAppSelector((state: RootState) => state.pagination.page);
+  //const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
     (state: RootState) => state.pagination.itemsPerPage,
   );
@@ -17,14 +15,14 @@ function Pagination(): JSX.Element {
     (state: RootState) => state.pagination.itemsQuantity,
   );
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const pagesQuantity = Math.ceil(itemsQuantity / itemsPerPage);
   const arrPages = createArrToNum(pagesQuantity);
+  arrPages;
 
   return (
     <div className={styles.pagination}>
-      <nav className={styles.paginationPages}>
+      {/* <nav className={styles.paginationPages}>
         {arrPages.map((pageNum) => {
           return (
             <Link
@@ -39,12 +37,11 @@ function Pagination(): JSX.Element {
             </Link>
           );
         })}
-      </nav>
+      </nav> */}
       <div className={styles.paginationQuantities}>
         <button
           className={styles.paginationQuantity}
           onClick={() => {
-            navigate(`?page=1`);
             dispatch(setPage(1));
             dispatch(setItemsPerPage(5));
           }}
@@ -54,7 +51,6 @@ function Pagination(): JSX.Element {
         <button
           className={styles.paginationQuantity}
           onClick={() => {
-            navigate(`?page=1`);
             dispatch(setPage(1));
             dispatch(setItemsPerPage(10));
           }}

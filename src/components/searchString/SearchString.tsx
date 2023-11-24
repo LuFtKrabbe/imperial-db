@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import type { RootState } from "../../app/store";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setSearchQuery } from "./searchSlice";
@@ -13,7 +12,6 @@ function SearchString(): JSX.Element {
   );
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [query, setQuery] = useState(searchQuery);
 
@@ -30,7 +28,6 @@ function SearchString(): JSX.Element {
         <button
           className={styles.searchButton}
           onClick={() => {
-            navigate(`?page=1`);
             dispatch(setPage(1));
             dispatch(setSearchQuery(query));
           }}

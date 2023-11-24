@@ -1,8 +1,5 @@
 import styles from "./DetailedCard.module.css";
 
-import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
-
 import { setLoadingPlanetDetails } from "../../services/loadingFlagsSlice";
 import { useAppDispatch } from "../../app/hooks";
 
@@ -10,14 +7,9 @@ import { useGetPlanetByIdQuery } from "../../services/planet";
 import { useEffect } from "react";
 
 function DetailedCard(): JSX.Element {
-  const [searchParams] = useSearchParams();
-
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { data, error, isLoading } = useGetPlanetByIdQuery(
-    `${searchParams.get("id")}`,
-  );
+  const { data, error, isLoading } = useGetPlanetByIdQuery(``);
 
   useEffect(() => {
     dispatch(setLoadingPlanetDetails(isLoading));
@@ -30,13 +22,7 @@ function DetailedCard(): JSX.Element {
   return (
     <>
       <div className={styles.detailedCard}>
-        <div
-          role="detailedCardCurtain"
-          className={styles.curtain}
-          onClick={() => {
-            navigate(-1);
-          }}
-        ></div>
+        <div role="detailedCardCurtain" className={styles.curtain}></div>
         <div className={styles.panel} role="detailedCardPanel">
           {isLoading ? (
             <h1>Loading...</h1>
@@ -55,14 +41,7 @@ function DetailedCard(): JSX.Element {
               </div>
             </div>
           ) : null}
-          <button
-            className={styles.closeButton}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            CLOSE
-          </button>
+          <button className={styles.closeButton}>CLOSE</button>
         </div>
       </div>
     </>

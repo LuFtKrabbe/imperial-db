@@ -1,20 +1,13 @@
 import styles from "./Card.module.css";
 import { CardProps } from "../../types/types";
-import { useNavigate } from "react-router";
 
 function Card(props: CardProps): JSX.Element {
-  const { name, population, climate, terrain, gravity, url } = props.itemProp;
-  const { pageProp, itemNumProp } = props;
-  const id = url.split("/").slice(-2)[0];
-  const navigate = useNavigate();
+  const { name, population, climate, terrain, gravity } = props.itemProp;
+  //const { pageProp, itemNumProp } = props;
+  //const id = url.split("/").slice(-2)[0];
 
   return (
-    <div
-      className={styles.card}
-      onClick={() => {
-        navigate(`card/?frontpage=${pageProp}&details=${itemNumProp}&id=${id}`);
-      }}
-    >
+    <div className={styles.card}>
       <div className={styles.name}>{name}</div>
       <div className={styles.gravity}>Gravity: {gravity}</div>
       <div className={styles.population}>Population: {population}</div>
