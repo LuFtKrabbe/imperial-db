@@ -1,27 +1,29 @@
-import { useEffect, useState, createContext } from "react";
+import { createContext } from "react";
 
-import {
-  PlanetParams,
-  PartPlanetListFunc,
-  ContextProps,
-} from "../../types/types";
-import type { RootState } from "../../app/store";
-import { isOdd } from "../../utils/utils";
+import { PlanetParams, ContextProps } from "../../types/types";
+/* import type { RootState } from "../../app/store";
+import { isOdd } from "../../utils/utils"; */
 
-import SearchString from "../searchString/SearchString";
+/* import SearchString from "../searchString/SearchString"; */
 import CardList from "../cardList/CardList";
-import ErrorButton from "../errorButton/ErrorButton";
+/* import ErrorButton from "../errorButton/ErrorButton"; */
 import Pagination from "../pagination/Pagination";
-import { setItemsQuantity } from "../pagination/paginationSlice";
+/* import { setItemsQuantity } from "../pagination/paginationSlice";
 import { setLoadingPlanetList } from "../../services/loadingFlagsSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-import { useGetPlanetListQuery } from "../../services/planet";
+import { useGetPlanetListQuery } from "../../services/planet"; */
 
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 
-function DataManager() {
-  const ITEMS_PER_PAGE_FROM_SERVER = 10;
+function DataManager({
+  planetList,
+  itemsQuantity,
+}: {
+  planetList: PlanetParams[];
+  itemsQuantity: number;
+}) {
+  /*   const ITEMS_PER_PAGE_FROM_SERVER = 10;
 
   const dispatch = useAppDispatch();
   const page = useAppSelector((state: RootState) => state.pagination.page);
@@ -65,17 +67,15 @@ function DataManager() {
 
     dispatch(setItemsQuantity(data?.count || 0));
     dispatch(setLoadingPlanetList(isFetching));
-  }, [isFetching, data, searchQuery, page, itemsPerPage, dispatch]);
+  }, [isFetching, data, searchQuery, page, itemsPerPage, dispatch]); */
 
   return (
     <>
-      <DataManagerContext.Provider value={{ planetList }}>
-        <h1>IMPERIAL PLANETARY DATABASE</h1>
-        <SearchString />
-        <ErrorButton />
-        <Pagination />
-        {isFetching ? <h1>Loading...</h1> : <CardList />}
-      </DataManagerContext.Provider>
+      <h1>IMPERIAL PLANETARY DATABASE</h1>
+      {/* <SearchString /> */}
+      {/* <ErrorButton /> */}
+      <Pagination itemsQuantity={itemsQuantity} />
+      <CardList planetList={planetList} />
     </>
   );
 }

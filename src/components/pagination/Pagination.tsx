@@ -1,34 +1,35 @@
 import { createArrToNum } from "../../utils/utils";
 
+import Link from "next/link";
+
 import type { RootState } from "../../app/store";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setPage, setItemsPerPage } from "./paginationSlice";
 
 import styles from "./Pagination.module.css";
 
-function Pagination(): JSX.Element {
-  //const page = useAppSelector((state: RootState) => state.pagination.page);
+function Pagination({ itemsQuantity }: Record<string, number>): JSX.Element {
+  const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
     (state: RootState) => state.pagination.itemsPerPage,
   );
-  const itemsQuantity = useAppSelector(
+  /*   const itemsQuantity = useAppSelector(
     (state: RootState) => state.pagination.itemsQuantity,
-  );
+  ); */
   const dispatch = useAppDispatch();
 
   const pagesQuantity = Math.ceil(itemsQuantity / itemsPerPage);
   const arrPages = createArrToNum(pagesQuantity);
-  arrPages;
 
   return (
     <div className={styles.pagination}>
-      {/* <nav className={styles.paginationPages}>
+      <nav className={styles.paginationPages}>
         {arrPages.map((pageNum) => {
           return (
             <Link
               className={pageNum === page ? styles.pageActive : styles.page}
               key={pageNum}
-              to={`?page=${pageNum}`}
+              href={`?page=${pageNum}`}
               onClick={() => {
                 dispatch(setPage(pageNum));
               }}
@@ -37,7 +38,7 @@ function Pagination(): JSX.Element {
             </Link>
           );
         })}
-      </nav> */}
+      </nav>
       <div className={styles.paginationQuantities}>
         <button
           className={styles.paginationQuantity}

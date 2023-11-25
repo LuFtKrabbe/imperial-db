@@ -1,15 +1,13 @@
-import { useContext } from "react";
-
 import styles from "./CardList.module.css";
 import Card from "../card/Card";
-import { DataManagerContext } from "../dataManager/DataManager";
 
 import type { RootState } from "../../app/store";
 import { useAppSelector } from "../../app/hooks";
+import { PlanetParams } from "../../types/types";
 
-function CardList(): JSX.Element {
-  const { planetList } = useContext(DataManagerContext);
+function CardList({ planetList }: Record<string, PlanetParams[]>): JSX.Element {
   const page = useAppSelector((state: RootState) => state.pagination.page);
+  console.log(planetList);
 
   return (
     <div className={styles.displayContainer} role={"cardList"}>
