@@ -30,8 +30,6 @@ export type PartPlanetListFunc = (
 export type CardProps = {
   key: string;
   itemProp: PlanetParams;
-  itemNumProp: number;
-  pageProp: number;
 };
 
 export type ContextProps = {

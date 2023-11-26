@@ -1,18 +1,19 @@
 import "../styles/global.css";
 
+import Head from "next/head";
 import type { AppProps } from "next/app";
 import { wrapper } from "../src/app/store";
-import SearchString from "../src/components/searchString/SearchString";
-import Pagination from "../src/components/pagination/Pagination";
+import favicon from "../public/imperial.svg";
 import ErrorBoundary from "../src/components/ErrorBoundary";
 
 export function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <ErrorBoundary>
-        <h1>IMPERIAL PLANETARY DATABASE</h1>
-        <SearchString />
-        <Pagination />
+        <Head>
+          <title>Imperial DB</title>
+          <link rel="icon" type="image/svg+xml" href={favicon.src} />
+        </Head>
         <Component {...pageProps} />
       </ErrorBoundary>
     </>

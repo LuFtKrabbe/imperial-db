@@ -1,14 +1,9 @@
-import Head from "next/head";
-import favicon from "../public/imperial.svg";
 import { GetServerSideProps } from "next";
 
 function Home(): JSX.Element {
   return (
     <>
-      <Head>
-        <title>Imperial DB</title>
-        <link rel="icon" type="image/svg+xml" href={favicon.src} />
-      </Head>
+      <h1>Loading...</h1>
     </>
   );
 }

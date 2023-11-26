@@ -6,9 +6,13 @@ function Card(props: CardProps): JSX.Element {
   const { name, population, climate, terrain, gravity, url } = props.itemProp;
   const id = url.split("/").slice(-2)[0];
   const router = useRouter();
+  const { query } = router;
 
   return (
-    <div className={styles.card} onClick={() => router.push(`/card/${id}`)}>
+    <div
+      className={styles.card}
+      onClick={() => router.push(`/${query.page}&card=${id}`)}
+    >
       <div className={styles.name}>{name}</div>
       <div className={styles.gravity}>Gravity: {gravity}</div>
       <div className={styles.population}>Population: {population}</div>

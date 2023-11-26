@@ -9,7 +9,6 @@ import { setPage, setItemsPerPage } from "./paginationSlice";
 import styles from "./Pagination.module.css";
 
 function Pagination(): JSX.Element {
-  const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
     (state: RootState) => state.pagination.itemsPerPage,
   );
@@ -30,11 +29,8 @@ function Pagination(): JSX.Element {
         {arrPages.map((pageNum) => {
           return (
             <Link
-              className={pageNum === page ? styles.pageActive : styles.page}
+              className={styles.page}
               key={pageNum}
-              onClick={() => {
-                dispatch(setPage(pageNum));
-              }}
               href={`/search=${searchQuery}&page=${pageNum}`}
             >
               {pageNum}

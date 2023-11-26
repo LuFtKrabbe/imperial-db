@@ -12,7 +12,7 @@ import CardList from "../cardList/CardList";
 import { setLoadingPlanetList } from "../../services/loadingFlagsSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
  */
-import { useGetPlanetListQuery } from "../../services/planet";
+import { useGetPlanetListQuery } from "../../services/planetApi";
 
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 

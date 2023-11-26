@@ -1,37 +1,30 @@
-import { useRouter } from "next/router";
 import { wrapper } from "../src/app/store";
 import {
+  getPlanetById,
   getPlanetList,
   getRunningQueriesThunk,
-  useGetPlanetListQuery,
-} from "../src/services/planet";
+} from "../src/services/planetApi";
 import CardList from "../src/components/cardList/CardList";
-import {
-  setItemsList,
-  setItemsQuantity,
-} from "../src/components/pagination/paginationSlice";
-import { useAppDispatch } from "../src/app/hooks";
-import { useEffect } from "react";
+import { setItemsQuantity } from "../src/components/pagination/paginationSlice";
+import { PlanetParams, PlanetResponse } from "../src/types/types";
+import Pagination from "../src/components/pagination/Pagination";
+import DetailedCard from "../src/components/detailedCard/DetailedCard";
+import SearchString from "../src/components/searchString/SearchString";
 
-function Page({}) {
-  const dispatch = useAppDispatch();
-  const { query } = useRouter();
-  const { data } = useGetPlanetListQuery(`?${query.page}`);
-
-  useEffect(() => {
-    if (data) {
-      dispatch(setItemsQuantity(data.count));
-      dispatch(setItemsList(data.results));
-    }
-  }, [data, dispatch]);
-
-  if (!data) {
-    return <h1>Loading...</h1>;
-  }
-
+function Page({
+  planetResponse,
+  planet,
+}: {
+  planetResponse: PlanetResponse;
+  planet: PlanetParams;
+}) {
   return (
     <>
-      <CardList planetList={data.results} />
+      <h1>IMPERIAL PLANETARY DATABASE</h1>
+      <SearchString />
+      <Pagination />
+      <CardList planetList={planetResponse.results} />
+      {planet ? <DetailedCard planet={planet} /> : <></>}
     </>
   );
 }
@@ -40,17 +33,24 @@ export default Page;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
-    const page = context.params?.page;
-    console.log("Page", page);
+    const page = context.params?.page as string;
+    const isCard = page.includes("card");
+    const id = isCard ? page.split("=").slice(-1)[0] : "1";
 
-    if (typeof page === "string") {
-      store.dispatch(getPlanetList.initiate(`?${page}`));
-    }
+    const response = await store.dispatch(
+      getPlanetList.initiate(`?${page.split("&").slice(0, 2).join("&")}`),
+    );
+    const planetResponse = response.data as PlanetResponse;
+
+    const response2 = await store.dispatch(getPlanetById.initiate(`${id}`));
+    const planet = isCard ? (response2.data as PlanetParams) : null;
 
     await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
+    store.dispatch(setItemsQuantity(planetResponse.count));
+
     return {
-      props: {},
+      props: { planetResponse, planet },
     };
   },
 );
