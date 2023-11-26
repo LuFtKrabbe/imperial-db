@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-const ISSERVER = typeof window === "undefined";
-
 export type SearchState = {
   searchQuery: string;
 };
 
 const initialState: SearchState = {
-  searchQuery: (!ISSERVER ? localStorage.getItem("lastSearchQuery") : "") || "",
+  searchQuery: "",
 };
 
 export const searchSlice = createSlice({
@@ -17,9 +15,6 @@ export const searchSlice = createSlice({
   reducers: {
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
-      if (!ISSERVER) {
-        localStorage.setItem("lastSearchQuery", action.payload);
-      }
     },
   },
 });

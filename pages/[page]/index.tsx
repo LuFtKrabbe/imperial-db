@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Pagination from "../../src/components/pagination/Pagination";
 import { wrapper } from "../../src/app/store";
 import {
   getPlanetList,
@@ -8,21 +7,26 @@ import {
 } from "../../src/services/planet";
 import { skipToken } from "@reduxjs/toolkit/query";
 import CardList from "../../src/components/cardList/CardList";
+import { setItemsQuantity } from "../../src/components/pagination/paginationSlice";
+import { useAppDispatch } from "../../src/app/hooks";
 
 function Page({}) {
+  const dispatch = useAppDispatch();
   const { query } = useRouter();
+  console.log(query.page);
 
   const { data } = useGetPlanetListQuery(
-    typeof query.page === "string" ? `?page=${query.page}` : skipToken,
+    typeof query.page === "string" ? `?${query.page}` : skipToken,
   );
 
   if (!data) {
     return <div>Loading</div>;
   }
 
+  dispatch(setItemsQuantity(data.count));
+
   return (
     <>
-      <Pagination />
       <CardList planetList={data.results} />
     </>
   );
@@ -36,7 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     console.log("Page", page);
 
     if (typeof page === "string") {
-      store.dispatch(getPlanetList.initiate(`?page=${page}`));
+      store.dispatch(getPlanetList.initiate(`?${page}`));
     }
 
     await Promise.all(store.dispatch(getRunningQueriesThunk()));

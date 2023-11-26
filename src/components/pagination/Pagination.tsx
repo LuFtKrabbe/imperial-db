@@ -16,6 +16,9 @@ function Pagination(): JSX.Element {
   const itemsQuantity = useAppSelector(
     (state: RootState) => state.pagination.itemsQuantity,
   );
+  const searchQuery = useAppSelector(
+    (state: RootState) => state.search.searchQuery,
+  );
   const dispatch = useAppDispatch();
 
   const pagesQuantity = Math.ceil(itemsQuantity / itemsPerPage);
@@ -32,7 +35,7 @@ function Pagination(): JSX.Element {
               onClick={() => {
                 dispatch(setPage(pageNum));
               }}
-              href={`/${pageNum}`}
+              href={`/search=${searchQuery}&page=${pageNum}`}
             >
               {pageNum}
             </Link>

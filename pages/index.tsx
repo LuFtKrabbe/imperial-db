@@ -15,7 +15,6 @@ function Home(): JSX.Element {
         <link rel="icon" type="image/svg+xml" href={favicon.src} />
       </Head>
       <ErrorBoundary>
-        <h1>IMPERIAL PLANETARY DATABASE</h1>
         {/* <Pagination /> */}
         {/* <DataManager itemsQuantity={itemsQuantity} /> */}
       </ErrorBoundary>
@@ -24,25 +23,3 @@ function Home(): JSX.Element {
 }
 
 export default Home;
-
-/* export const getServerSideProps = wrapper.getServerSideProps(
-
-  (store) => async (context) => {
-    store.dispatch(getPlanetList.initiate('page'));
-
-    return {
-      props: {},
-    };
-  }
-) */
-
-/*   wrapper.dispatch(api.endpoints.getPokemonByName.initiate(name))
-
-  const response = await fetch("https://swapi.dev/api/planets/");
-  const data: PlanetResponse = await response.json();
-
-  return {
-      planetList: data.results,
-      itemsQuantity: data.count,
-  };
-} */
