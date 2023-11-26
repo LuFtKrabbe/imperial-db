@@ -1,17 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { PlanetParams } from "../../types/types";
 //import { HYDRATE } from 'next-redux-wrapper';
 
 export type PaginationState = {
   page: number;
   itemsPerPage: 5 | 10;
   itemsQuantity: number;
+  itemsList: PlanetParams[];
 };
 
 const initialState: PaginationState = {
   page: 1,
   itemsPerPage: 10,
-  itemsQuantity: 60,
+  itemsQuantity: 1,
+  itemsList: [],
 };
 
 export const paginationSlice = createSlice({
@@ -20,13 +23,15 @@ export const paginationSlice = createSlice({
   reducers: {
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-      console.log(action);
     },
     setItemsPerPage: (state, action: PayloadAction<5 | 10>) => {
       state.itemsPerPage = action.payload;
     },
     setItemsQuantity: (state, action: PayloadAction<number>) => {
       state.itemsQuantity = action.payload;
+    },
+    setItemsList: (state, action: PayloadAction<PlanetParams[]>) => {
+      state.itemsList = action.payload;
     },
   },
   /*   extraReducers: {
@@ -40,7 +45,7 @@ export const paginationSlice = createSlice({
   } */
 });
 
-export const { setPage, setItemsPerPage, setItemsQuantity } =
+export const { setPage, setItemsPerPage, setItemsQuantity, setItemsList } =
   paginationSlice.actions;
 
 export default paginationSlice.reducer;

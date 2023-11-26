@@ -1,11 +1,6 @@
 import Head from "next/head";
 import favicon from "../public/imperial.svg";
-
-//import DataManager from "../src/components/dataManager/DataManager";
-import ErrorBoundary from "../src/components/ErrorBoundary";
-//import { PlanetParams, PlanetResponse } from "../src/types/types";
-//import { getPlanetList } from "../src/services/planet";
-//import Pagination from "../src/components/pagination/Pagination";
+import { GetServerSideProps } from "next";
 
 function Home(): JSX.Element {
   return (
@@ -14,12 +9,20 @@ function Home(): JSX.Element {
         <title>Imperial DB</title>
         <link rel="icon" type="image/svg+xml" href={favicon.src} />
       </Head>
-      <ErrorBoundary>
-        {/* <Pagination /> */}
-        {/* <DataManager itemsQuantity={itemsQuantity} /> */}
-      </ErrorBoundary>
     </>
   );
 }
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const targetURL = "/search=&page=1";
+  if (res) {
+    res.writeHead(307, { Location: targetURL });
+    res.end();
+  }
+
+  return {
+    props: {},
+  };
+};

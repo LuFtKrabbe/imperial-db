@@ -7,7 +7,6 @@ import { PlanetParams } from "../../types/types";
 
 function CardList({ planetList }: Record<string, PlanetParams[]>): JSX.Element {
   const page = useAppSelector((state: RootState) => state.pagination.page);
-  console.log(planetList);
 
   return (
     <div className={styles.displayContainer} role={"cardList"}>

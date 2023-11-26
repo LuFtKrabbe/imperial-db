@@ -1,29 +1,33 @@
 import { useRouter } from "next/router";
-import { wrapper } from "../../src/app/store";
+import { wrapper } from "../src/app/store";
 import {
   getPlanetList,
   getRunningQueriesThunk,
   useGetPlanetListQuery,
-} from "../../src/services/planet";
-import { skipToken } from "@reduxjs/toolkit/query";
-import CardList from "../../src/components/cardList/CardList";
-import { setItemsQuantity } from "../../src/components/pagination/paginationSlice";
-import { useAppDispatch } from "../../src/app/hooks";
+} from "../src/services/planet";
+import CardList from "../src/components/cardList/CardList";
+import {
+  setItemsList,
+  setItemsQuantity,
+} from "../src/components/pagination/paginationSlice";
+import { useAppDispatch } from "../src/app/hooks";
+import { useEffect } from "react";
 
 function Page({}) {
   const dispatch = useAppDispatch();
   const { query } = useRouter();
-  console.log(query.page);
+  const { data } = useGetPlanetListQuery(`?${query.page}`);
 
-  const { data } = useGetPlanetListQuery(
-    typeof query.page === "string" ? `?${query.page}` : skipToken,
-  );
+  useEffect(() => {
+    if (data) {
+      dispatch(setItemsQuantity(data.count));
+      dispatch(setItemsList(data.results));
+    }
+  }, [data, dispatch]);
 
   if (!data) {
-    return <div>Loading</div>;
+    return <h1>Loading...</h1>;
   }
-
-  dispatch(setItemsQuantity(data.count));
 
   return (
     <>

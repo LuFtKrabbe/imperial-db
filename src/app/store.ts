@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
-//import loadingFlagsReducer from "../services/loadingFlagsSlice";
 import paginationReducer from "../components/pagination/paginationSlice";
 import searchReducer from "../components/searchString/searchSlice";
 import { planetApi } from "../services/planet";
@@ -8,7 +7,6 @@ import { planetApi } from "../services/planet";
 export const makeStore = () =>
   configureStore({
     reducer: {
-      //loadingFlags: loadingFlagsReducer,
       pagination: paginationReducer,
       search: searchReducer,
       planetApi: planetApi.reducer,
