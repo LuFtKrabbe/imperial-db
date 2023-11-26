@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 export type SearchState = {
   searchQuery: string;
 };
 
 const initialState: SearchState = {
-  searchQuery: localStorage.getItem("lastSearchQuery") || "",
+  searchQuery: "",
 };
 
 export const searchSlice = createSlice({
@@ -15,7 +16,14 @@ export const searchSlice = createSlice({
   reducers: {
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
-      localStorage.setItem("lastSearchQuery", action.payload);
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.pagination,
+      };
     },
   },
 });

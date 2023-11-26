@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 export type PaginationState = {
   page: number;
@@ -10,7 +11,7 @@ export type PaginationState = {
 const initialState: PaginationState = {
   page: 1,
   itemsPerPage: 10,
-  itemsQuantity: 0,
+  itemsQuantity: 1,
 };
 
 export const paginationSlice = createSlice({
@@ -25,6 +26,15 @@ export const paginationSlice = createSlice({
     },
     setItemsQuantity: (state, action: PayloadAction<number>) => {
       state.itemsQuantity = action.payload;
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      console.log(action);
+      return {
+        ...state,
+        ...action.payload.pagination,
+      };
     },
   },
 });

@@ -1,22 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import loadingFlagsReducer from "../services/loadingFlagsSlice";
+import { createWrapper } from "next-redux-wrapper";
 import paginationReducer from "../components/pagination/paginationSlice";
 import searchReducer from "../components/searchString/searchSlice";
-import { planetApi } from "../services/planet";
+import { planetApi } from "../services/planetApi";
 
-export const store = configureStore({
-  reducer: {
-    loadingFlags: loadingFlagsReducer,
-    pagination: paginationReducer,
-    search: searchReducer,
-    planetApi: planetApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(planetApi.middleware),
-});
+export const makeStore = () =>
+  configureStore({
+    reducer: {
+      pagination: paginationReducer,
+      search: searchReducer,
+      planetApi: planetApi.reducer,
+    },
+    devTools: true,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(planetApi.middleware),
+  });
 
-setupListeners(store.dispatch);
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });
