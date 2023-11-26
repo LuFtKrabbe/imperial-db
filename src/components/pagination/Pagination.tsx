@@ -8,14 +8,14 @@ import { setPage, setItemsPerPage } from "./paginationSlice";
 
 import styles from "./Pagination.module.css";
 
-function Pagination({ itemsQuantity }: Record<string, number>): JSX.Element {
+function Pagination(): JSX.Element {
   const page = useAppSelector((state: RootState) => state.pagination.page);
   const itemsPerPage = useAppSelector(
     (state: RootState) => state.pagination.itemsPerPage,
   );
-  /*   const itemsQuantity = useAppSelector(
+  const itemsQuantity = useAppSelector(
     (state: RootState) => state.pagination.itemsQuantity,
-  ); */
+  );
   const dispatch = useAppDispatch();
 
   const pagesQuantity = Math.ceil(itemsQuantity / itemsPerPage);
@@ -29,10 +29,10 @@ function Pagination({ itemsQuantity }: Record<string, number>): JSX.Element {
             <Link
               className={pageNum === page ? styles.pageActive : styles.page}
               key={pageNum}
-              href={`?page=${pageNum}`}
               onClick={() => {
                 dispatch(setPage(pageNum));
               }}
+              href={`/${pageNum}`}
             >
               {pageNum}
             </Link>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 import type { RootState } from "../../app/store";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setSearchQuery } from "./searchSlice";
@@ -39,4 +39,4 @@ function SearchString(): JSX.Element {
   );
 }
 
-export default SearchString;
+export default SearchString; */

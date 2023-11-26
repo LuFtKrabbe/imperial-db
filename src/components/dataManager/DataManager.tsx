@@ -1,28 +1,25 @@
 import { createContext } from "react";
 
-import { PlanetParams, ContextProps } from "../../types/types";
+import { ContextProps } from "../../types/types";
 /* import type { RootState } from "../../app/store";
 import { isOdd } from "../../utils/utils"; */
 
 /* import SearchString from "../searchString/SearchString"; */
 import CardList from "../cardList/CardList";
 /* import ErrorButton from "../errorButton/ErrorButton"; */
-import Pagination from "../pagination/Pagination";
+//import Pagination from "../pagination/Pagination";
 /* import { setItemsQuantity } from "../pagination/paginationSlice";
 import { setLoadingPlanetList } from "../../services/loadingFlagsSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-
-import { useGetPlanetListQuery } from "../../services/planet"; */
+ */
+import { useGetPlanetListQuery } from "../../services/planet";
 
 export const DataManagerContext = createContext<Partial<ContextProps>>({});
 
-function DataManager({
-  planetList,
-  itemsQuantity,
-}: {
-  planetList: PlanetParams[];
-  itemsQuantity: number;
-}) {
+function DataManager() {
+  const result = useGetPlanetListQuery("");
+  const { data } = result;
+  const planetList = data?.results || [];
   /*   const ITEMS_PER_PAGE_FROM_SERVER = 10;
 
   const dispatch = useAppDispatch();
@@ -71,10 +68,8 @@ function DataManager({
 
   return (
     <>
-      <h1>IMPERIAL PLANETARY DATABASE</h1>
       {/* <SearchString /> */}
       {/* <ErrorButton /> */}
-      <Pagination itemsQuantity={itemsQuantity} />
       <CardList planetList={planetList} />
     </>
   );
