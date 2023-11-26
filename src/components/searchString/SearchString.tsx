@@ -16,7 +16,7 @@ function SearchString(): JSX.Element {
 
     dispatch(setPage(1));
     dispatch(setSearchQuery(query));
-    router.push(`search=${query}&page=1`);
+    router.push(`search=${query}&page=1&limit=10`);
   };
 
   return (

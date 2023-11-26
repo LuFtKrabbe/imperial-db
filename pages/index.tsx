@@ -11,7 +11,7 @@ function Home(): JSX.Element {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const targetURL = "/search=&page=1";
+  const targetURL = "/search=&page=1&limit=10";
   if (res) {
     res.writeHead(307, { Location: targetURL });
     res.end();

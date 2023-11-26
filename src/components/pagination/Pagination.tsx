@@ -3,22 +3,20 @@ import { createArrToNum } from "../../utils/utils";
 import Link from "next/link";
 
 import type { RootState } from "../../app/store";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { setPage, setItemsPerPage } from "./paginationSlice";
+import { useAppSelector } from "../../app/hooks";
 
 import styles from "./Pagination.module.css";
 
-function Pagination(): JSX.Element {
-  const itemsPerPage = useAppSelector(
-    (state: RootState) => state.pagination.itemsPerPage,
-  );
+function Pagination({
+  itemsPerPage,
+  searchQuery,
+}: {
+  itemsPerPage: number;
+  searchQuery: string;
+}): JSX.Element {
   const itemsQuantity = useAppSelector(
     (state: RootState) => state.pagination.itemsQuantity,
   );
-  const searchQuery = useAppSelector(
-    (state: RootState) => state.search.searchQuery,
-  );
-  const dispatch = useAppDispatch();
 
   const pagesQuantity = Math.ceil(itemsQuantity / itemsPerPage);
   const arrPages = createArrToNum(pagesQuantity);
@@ -31,7 +29,7 @@ function Pagination(): JSX.Element {
             <Link
               className={styles.page}
               key={pageNum}
-              href={`/search=${searchQuery}&page=${pageNum}`}
+              href={`/search=${searchQuery}&page=${pageNum}&limit=${itemsPerPage}`}
             >
               {pageNum}
             </Link>
@@ -39,24 +37,18 @@ function Pagination(): JSX.Element {
         })}
       </nav>
       <div className={styles.paginationQuantities}>
-        <button
+        <Link
           className={styles.paginationQuantity}
-          onClick={() => {
-            dispatch(setPage(1));
-            dispatch(setItemsPerPage(5));
-          }}
+          href={`/search=${searchQuery}&page=1&limit=5`}
         >
           5
-        </button>
-        <button
+        </Link>
+        <Link
           className={styles.paginationQuantity}
-          onClick={() => {
-            dispatch(setPage(1));
-            dispatch(setItemsPerPage(10));
-          }}
+          href={`/search=${searchQuery}&page=1&limit=10`}
         >
           10
-        </button>
+        </Link>
       </div>
     </div>
   );
