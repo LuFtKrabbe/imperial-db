@@ -1,22 +1,25 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { countryList } from "./utils/contryList";
 
 export type FormDataType = {
   name: string;
-  age: string;
+  age: string | number;
   gender: string;
   country: string;
   email: string;
   password: string;
   confirmPassword: string;
-  image: File | string;
+  image: FileList | File | string;
   termsConditions: string;
 };
 
-export type FormDataArrState = {
+export type FormDataState = {
+  countryList: string[];
   formData: FormDataType[];
 };
 
-const initialState: FormDataArrState = {
+const initialState: FormDataState = {
+  countryList: countryList,
   formData: [],
 };
 

@@ -3,24 +3,36 @@ import styles from "./Forms.module.scss";
 import * as yup from "yup";
 
 import { Link, useNavigate } from "react-router-dom";
-import { definePasswordStrength } from "./definePasswordStrength";
+import { definePasswordStrength, toBase64 } from "./utils/functions";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { useDispatch } from "react-redux";
 import { FormDataType, setFormData } from "./formDataSlice";
 import useCountrySelector from "../../app/hookCountrySelector";
-import { countryList } from "./contriesList";
+import {
+  ageSchema,
+  countrySchema,
+  emailSchema,
+  genderSchema,
+  imageSchemaFile,
+  nameSchema,
+  termsConditionsSchema,
+} from "./utils/validationScheme";
 
-interface Errors {
+type Errors = {
   [key: string]: string;
-}
+};
 
 function UnCtrlForm(): JSX.Element {
   const formRef = useRef<HTMLFormElement | null>(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formDataArr = useAppSelector(
     (state: RootState) => state.formData.formData,
+  );
+  const countryList = useAppSelector(
+    (state: RootState) => state.formData.countryList,
   );
   const { value, countries, selectCountry, handleValueChange } =
     useCountrySelector();
@@ -31,23 +43,12 @@ function UnCtrlForm(): JSX.Element {
     fullness: "5%",
   });
 
-  const dispatch = useDispatch();
-
   const validationSchema = yup.object().shape({
-    name: yup
-      .string()
-      .max(32)
-      .required()
-      .matches(/^[A-Z]/, "name must start with an uppercase letter"),
-    age: yup
-      .number()
-      .typeError("enter your age as a number")
-      .positive("age must be positive")
-      .integer()
-      .max(100),
-    gender: yup.string().required("choose your gender"),
-    country: yup.string().required("enter your country"),
-    email: yup.string().email().required("enter your e-mail"),
+    name: nameSchema,
+    age: ageSchema,
+    gender: genderSchema,
+    country: countrySchema,
+    email: emailSchema,
     password: yup
       .string()
       .required("enter your password")
@@ -64,24 +65,9 @@ function UnCtrlForm(): JSX.Element {
       .string()
       .required("enter your password")
       .oneOf([yup.ref("password")], "passwords must match"),
-    image: yup
-      .mixed<File>()
-      .required("attach a file")
-      .test("fileFormat", "png and jpeg formats only", (value) => {
-        return value.type === "image/png" || value.type === "image/jpeg";
-      }),
-    termsConditions: yup
-      .string()
-      .required("Terms & Сonditions must be accepted"),
+    image: imageSchemaFile,
+    termsConditions: termsConditionsSchema,
   });
-
-  const toBase64 = (file: File) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-    });
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -231,7 +217,7 @@ function UnCtrlForm(): JSX.Element {
             <input
               type="checkbox"
               id="termsConditions"
-              value="accepted"
+              value="true"
               name="termsConditions"
               className={styles.terms}
             ></input>

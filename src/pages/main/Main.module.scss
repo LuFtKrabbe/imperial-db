@@ -44,11 +44,12 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  height: 400px;
+  min-height: 376px;
   font-size: 1.4rem;
   border-radius: 16px;
   background-color: rgb(25, 25, 25);
   margin: 16px 0;
+  padding: 0 0 12px 0;
   & > div:first-child {
     animation-name: shine;
     animation-duration: 5s;
