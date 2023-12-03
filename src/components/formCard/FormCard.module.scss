@@ -1,0 +1,44 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 94%;
+  margin: 12px 0 0 0;
+  background-color: rgb(35, 35, 35);
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.image {
+  object-fit: fill;
+  display: block;
+  height: 30px;
+  margin: 0 10px 0 0;
+  border-radius: 5px;
+}
+
+.card:hover {
+  background-color: rgb(55, 55, 55);
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: solid 2px rgb(82, 99, 72);
+  font-size: 1.3rem;
+  font-weight: 500;
+  padding: 0 0 4px 0;
+  margin: 0 0 4px 0;
+  min-width: 50%;
+}
+
+.country,
+.credentials {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+}
