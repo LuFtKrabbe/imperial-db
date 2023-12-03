@@ -4,6 +4,10 @@ import * as yup from "yup";
 
 import { Link, useNavigate } from "react-router-dom";
 import { definePasswordStrength } from "./definePasswordStrength";
+import { useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import { useDispatch } from "react-redux";
+import { FormDataType, setFormData } from "./formDataSlice";
 
 interface Errors {
   [key: string]: string;
@@ -15,11 +19,17 @@ function UnCtrlForm(): JSX.Element {
   const inputRefMale = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
 
+  const formDataArr = useAppSelector(
+    (state: RootState) => state.formData.formData,
+  );
+
   const [errors, setErrors] = useState<Errors>({});
   const [strength, setStrength] = useState({
     color: "darkred",
     fullness: "5%",
   });
+
+  const dispatch = useDispatch();
 
   const validationSchema = yup.object().shape({
     name: yup
@@ -69,6 +79,9 @@ function UnCtrlForm(): JSX.Element {
         })
         .then((valid) => {
           if (valid) {
+            const formDataObj = Object.fromEntries(formData) as FormDataType;
+            const newFormDataArr = formDataArr.concat(formDataObj);
+            dispatch(setFormData(newFormDataArr));
             console.log(Object.fromEntries(formData));
             navigate("/main");
           } else {
