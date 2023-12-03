@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  padding: 10px;
+  padding: 10px 10px 16px 10px;
   width: 500px;
   margin: 10px 0;
   border-radius: 16px;
@@ -103,4 +103,35 @@
     background-color: rgb(78, 121, 74);
     border: solid 0px transparent;
   }
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  font-weight: 500;
+  margin: 0 20px 0 0;
+  height: 0px;
+  width: 100%;
+  font-size: 0.7rem;
+  color: rgb(155, 70, 70);
+}
+
+.strengthBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: flex-end;
+  top: -8px;
+  height: 2px;
+  width: 260px;
+  margin: 0 10px 0 0;
+  background-color: grey;
+}
+
+.strength {
+  height: 2px;
+  transition: width ease 500ms;
 }
