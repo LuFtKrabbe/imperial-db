@@ -163,7 +163,7 @@ function UnCtrlForm(): JSX.Element {
           )}
           <div className={styles.field}>
             <label htmlFor="password">Password</label>
-            <input type="text" id="password" name="password"></input>
+            <input type="password" id="password" name="password"></input>
           </div>
           <div className={styles.strengthBar}>
             <div
@@ -180,7 +180,7 @@ function UnCtrlForm(): JSX.Element {
           <div className={styles.field}>
             <label htmlFor="confirmPassword">Confirm password</label>
             <input
-              type="text"
+              type="password"
               id="confirmPassword"
               name="confirmPassword"
             ></input>

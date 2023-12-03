@@ -3,8 +3,15 @@ import styles from "./Main.module.scss";
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "../../../public/vite.svg";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import FormCard from "../../components/FormCard/FormCard";
 
 function Main(): JSX.Element {
+  const formDataArr = useAppSelector(
+    (state: RootState) => state.formData.formData,
+  );
+
   return (
     <>
       <div className={styles.title}>FORMS</div>
@@ -18,7 +25,17 @@ function Main(): JSX.Element {
           Controlled form
         </Link>
       </div>
-      <div className={styles.formsContainer}>FORMS CONTAINER</div>
+      <div className={styles.formsContainer}>
+        {formDataArr.length ? (
+          formDataArr
+            .toReversed()
+            .map((formData) => (
+              <FormCard key={formData.email} formData={formData} />
+            ))
+        ) : (
+          <h3>Not any forms created</h3>
+        )}
+      </div>
     </>
   );
 }
