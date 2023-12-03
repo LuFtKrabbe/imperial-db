@@ -8,7 +8,7 @@ export type FormDataType = {
   email: string;
   password: string;
   confirmPassword: string;
-  image: File;
+  image: File | string;
   termsConditions: string;
 };
 

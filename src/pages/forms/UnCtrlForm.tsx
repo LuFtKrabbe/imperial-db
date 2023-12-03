@@ -17,8 +17,6 @@ interface Errors {
 
 function UnCtrlForm(): JSX.Element {
   const formRef = useRef<HTMLFormElement | null>(null);
-  const inputRefAge = useRef<HTMLInputElement | null>(null);
-  const inputRefMale = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
 
   const formDataArr = useAppSelector(
@@ -66,11 +64,24 @@ function UnCtrlForm(): JSX.Element {
       .string()
       .required("enter your password")
       .oneOf([yup.ref("password")], "passwords must match"),
-    image: yup.string().required("image is required"),
+    image: yup
+      .mixed<File>()
+      .required("attach a file")
+      .test("fileFormat", "png and jpeg formats only", (value) => {
+        return value.type === "image/png" || value.type === "image/jpeg";
+      }),
     termsConditions: yup
       .string()
       .required("Terms & Сonditions must be accepted"),
   });
+
+  const toBase64 = (file: File) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -84,10 +95,11 @@ function UnCtrlForm(): JSX.Element {
         .then((valid) => {
           if (valid) {
             const formDataObj = Object.fromEntries(formData) as FormDataType;
-            const newFormDataArr = formDataArr.concat(formDataObj);
-            dispatch(setFormData(newFormDataArr));
-            console.log(Object.fromEntries(formData));
-            navigate("/main");
+            toBase64(formDataObj.image as File).then((result) => {
+              formDataObj.image = result as string;
+              dispatch(setFormData(formDataArr.concat(formDataObj)));
+              navigate("/main");
+            });
           } else {
             console.log("Form validation failed");
           }
@@ -101,8 +113,6 @@ function UnCtrlForm(): JSX.Element {
               }, {} as Errors),
             );
           }
-          console.log("Validation error: ", error);
-          console.log("Validation errors: ", errors);
         });
     }
   };
@@ -122,7 +132,7 @@ function UnCtrlForm(): JSX.Element {
           {errors.name && <p className={styles.errorMessage}>{errors.name}</p>}
           <div className={styles.field}>
             <label htmlFor="age">Age</label>
-            <input type="text" id="age" name="age" ref={inputRefAge}></input>
+            <input type="text" id="age" name="age"></input>
           </div>
           {errors.age && <p className={styles.errorMessage}>{errors.age}</p>}
           <div className={styles.field}>
@@ -134,7 +144,6 @@ function UnCtrlForm(): JSX.Element {
                 value="male"
                 name="gender"
                 className={styles.radio}
-                ref={inputRefMale}
               ></input>
               <label htmlFor="male">Male</label>
               <input
@@ -212,12 +221,7 @@ function UnCtrlForm(): JSX.Element {
           <div className={styles.divider}></div>
           <div className={styles.field}>
             <label htmlFor="image">Image</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/png, image/jpeg"
-            ></input>
+            <input type="file" id="image" name="image"></input>
           </div>
           {errors.image && (
             <p className={styles.errorMessage}>{errors.image}</p>
