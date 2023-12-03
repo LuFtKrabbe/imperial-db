@@ -12,6 +12,7 @@
 }
 
 .fieldsContainer {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -134,4 +135,29 @@
 .strength {
   height: 2px;
   transition: width ease 500ms;
+}
+
+.countries {
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  right: 20px;
+  top: 176px;
+  width: 260px;
+  border-radius: 3px;
+  flex-direction: column;
+  background-color: rgb(85, 85, 85);
+  max-height: 168px;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.country {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 3px;
+  &:hover {
+    background-color: rgb(105, 105, 105);
+  }
 }

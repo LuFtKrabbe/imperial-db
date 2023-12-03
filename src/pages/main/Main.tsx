@@ -5,7 +5,7 @@ import viteLogo from "../../../public/vite.svg";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import FormCard from "../../components/FormCard/FormCard";
+import FormCard from "../../components/formCard/FormCard";
 
 function Main(): JSX.Element {
   const formDataArr = useAppSelector(

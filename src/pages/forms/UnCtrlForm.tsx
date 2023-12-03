@@ -8,6 +8,8 @@ import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { useDispatch } from "react-redux";
 import { FormDataType, setFormData } from "./formDataSlice";
+import useCountrySelector from "../../app/hookCountrySelector";
+import { countryList } from "./contriesList";
 
 interface Errors {
   [key: string]: string;
@@ -22,6 +24,8 @@ function UnCtrlForm(): JSX.Element {
   const formDataArr = useAppSelector(
     (state: RootState) => state.formData.formData,
   );
+  const { value, countries, selectCountry, handleValueChange } =
+    useCountrySelector();
 
   const [errors, setErrors] = useState<Errors>({});
   const [strength, setStrength] = useState({
@@ -148,7 +152,24 @@ function UnCtrlForm(): JSX.Element {
           )}
           <div className={styles.field}>
             <label htmlFor="country">Country</label>
-            <input type="input" id="country" name="country"></input>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              onChange={(e) => handleValueChange(e.target.value, countryList)}
+              value={value}
+            ></input>
+            <div className={styles.countries}>
+              {countries.map((country) => (
+                <div
+                  className={styles.country}
+                  key={country}
+                  onClick={() => selectCountry(country)}
+                >
+                  {country}
+                </div>
+              ))}
+            </div>
           </div>
           {errors.country && (
             <p className={styles.errorMessage}>{errors.country}</p>
